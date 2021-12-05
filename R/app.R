@@ -1,7 +1,9 @@
 library(shiny)
-ui <- fluidPage(
-  "Hello, world!"
-)
-server <- function(input, output, session) {
-}
+library(shinydashboard)
+library(DT)
+
+source("ui/ui.R")
+
+source("server/server.R")
+
 shinyApp(ui, server)
