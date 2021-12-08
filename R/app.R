@@ -1,5 +1,6 @@
 library(DT)
 library(exams)
+library(rmarkdown)
 library(shiny)
 library(shinydashboard)
 

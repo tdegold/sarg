@@ -1,6 +1,7 @@
 req <- c(
   "DT",
   "exams",
+  "rmarkdown",
   "shiny",
   "shinydashboard"
 )
