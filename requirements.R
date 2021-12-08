@@ -1,7 +1,8 @@
 req <- c(
+  "DT",
+  "exams",
   "shiny",
-  "shinydashboard",
-  "DT"
+  "shinydashboard"
 )
 
 install.packages(req)

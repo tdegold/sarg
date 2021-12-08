@@ -1,6 +1,9 @@
+library(DT)
+library(exams)
 library(shiny)
 library(shinydashboard)
-library(DT)
+
+source("./config.R")
 
 source("ui/ui.R")
 
