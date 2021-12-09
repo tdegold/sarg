@@ -3,7 +3,7 @@ server <- function(input, output, session) {
   get_examples <- function(){
     df_examples <- data.frame()
     
-    for (ex in dir(path = EXAMPLES_PATH)) {
+    for (ex in dir(EXAMPLES_PATH)) {
       name <- exams::read_metainfo(paste0(EXAMPLES_PATH,ex))$name
       points <- exams::read_metainfo(paste0(EXAMPLES_PATH,ex))$points
       section <- exams::read_metainfo(paste0(EXAMPLES_PATH,ex))$section
@@ -11,22 +11,20 @@ server <- function(input, output, session) {
       
       df_examples <- rbind(df_examples, data.frame(name, section, points, file))
     }
-    names(df_examples) <- c("Name", "Categories", "Points", "File")
+    #names(df_examples) <- c("Name", "Categories", "Points", "File")
     return(df_examples)
   }
   output$tab_examples <- renderDataTable({
-    temp <- get_examples()
+    temp <- get_examples()[,1:3] # do not display the file-path
     DT::datatable(temp, selection = "single")
   })
   
   observe({
     req(input$tab_examples_rows_selected)
     mypath <- get_examples()[input$tab_examples_rows_selected,4]
-    print(mypath)
-    output$selected_html_view <- renderUI({
+    output$selected_view <- renderUI({
       exams2html(paste0(mypath,".Rmd"), dir = TEMP_PATH)
-      
-      includeHTML(paste0(TEMP_PATH, "/", "plain81.html"))
+      withMathJax(includeHTML(paste0(TEMP_PATH, "/", "plain81.html")))
     })
   })
   
