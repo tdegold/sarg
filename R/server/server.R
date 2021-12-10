@@ -22,6 +22,17 @@ server <- function(input, output, session) {
   })
   
   observe({
+    req(is.null(input$tab_examples_rows_selected))
+    output$ace_editor <- renderUI({
+      h1("First, select an example on the first tab!")
+    })
+    
+    output$selected_view <- renderUI({
+        h1("No example selected!")
+    })
+  })
+  
+  observe({
     req(input$tab_examples_rows_selected)
     # tab_beispieluebersciht
     gen_path <- function(){
