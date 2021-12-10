@@ -41,5 +41,5 @@ extype: num
 exsolution: `r fmt(abs(tstat), 3)`
 exname: t statistic
 extol: 0.01
-exsection: stat
-expoints: 2
+exsection: default
+expoints: 1
