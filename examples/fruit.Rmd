@@ -84,5 +84,5 @@ exname: Fruit baskets (numeric)
 extype: num
 exsolution: `r fmt(sol)`
 extol: 0
-exsection: default|image
+exsection: default
 expoints: 1

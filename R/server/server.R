@@ -23,10 +23,30 @@ server <- function(input, output, session) {
   
   observe({
     req(input$tab_examples_rows_selected)
-    mypath <- get_examples()[input$tab_examples_rows_selected,5]
+    # tab_beispieluebersciht
+    gen_path <- function(){
+      return(paste0(get_examples()[input$tab_examples_rows_selected,5], ".Rmd"))
+    }
+    
     output$selected_view <- renderUI({
-      exams2html(paste0(mypath,".Rmd"), dir = TEMP_PATH)
+      exams2html(gen_path(), dir = TEMP_PATH)
       withMathJax(includeHTML(paste0(TEMP_PATH, "/", "plain81.html")))
+    })
+    # tab_beispieleditor
+    output$ace_editor <- renderUI({
+      tagList(
+      aceEditor("file_content", 
+                value = readChar(gen_path(), file.info(gen_path())$size),
+                mode = "r",
+                showLineNumbers = TRUE
+      ),
+      actionButton("ace_save", label = "Update Example", class = "btn-success")
+      )
+    })
+    
+    observeEvent(input$ace_save, {
+      #TODO write file_content to respective file
+      showNotification("Example saved", type = "message")
     })
   })
   

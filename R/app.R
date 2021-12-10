@@ -2,6 +2,7 @@ library(DT)
 library(exams)
 library(rmarkdown)
 library(shiny)
+library(shinyAce)
 library(shinydashboard)
 
 source("./config.R")

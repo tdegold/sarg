@@ -141,4 +141,4 @@ exsolution: `r fmt(sol)`
 exname: Lagrange cost minimization
 extol: 0.01
 exsection: default|plot
-expoints: 2
+expoints: 1

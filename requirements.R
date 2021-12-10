@@ -3,6 +3,7 @@ req <- c(
   "exams",
   "rmarkdown",
   "shiny",
+  "shinyAce",
   "shinydashboard"
 )
 
