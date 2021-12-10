@@ -5,14 +5,16 @@ source("ui/tab_preview.R")
 
 ui  <- dashboardPage(
   # HEADER #
-  dashboardHeader(),
+  dashboardHeader(title = "SARG2.0"),
   # SIDEBAR #
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Beispieluebersicht", tabName = "tab_beispieluebersicht", icon = icon("table")),
-      menuItem("Beispieleditor", tabName = "tab_beispieleditor", icon = icon("file")),
-      menuItem("Beispielselektor", tabName = "tab_beispielselector", icon = icon("list")),
-      menuItem("Preview", tabName = "tab_preview", icon = icon("book"))
+      sidebarMenu(style = "position: fixed; overflow: visible;",
+        menuItem("Beispieluebersicht", tabName = "tab_beispieluebersicht", icon = icon("table")),
+        menuItem("Beispieleditor", tabName = "tab_beispieleditor", icon = icon("file")),
+        menuItem("Beispielselektor", tabName = "tab_beispielselector", icon = icon("list")),
+        menuItem("Preview", tabName = "tab_preview", icon = icon("book"))
+      )
     )
   ),
   # BODY #
