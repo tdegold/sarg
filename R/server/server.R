@@ -16,9 +16,10 @@ server <- function(input, output, session) {
     names(df_examples) <- c("Name", "Section", "Sum of Points", "Type", "File")
     return(df_examples)
   }
+  
   output$tab_examples <- renderDataTable({
     temp <- get_examples()[,1:4] # do not display the file-path
-    DT::datatable(temp, selection = "single")
+    DT::datatable(temp, selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
   })
   
   observe({
@@ -61,7 +62,25 @@ server <- function(input, output, session) {
     })
   })
   
-  output$data <- renderText(input$choices)
+  output$exampleSelector <- renderUI({
+    selectInput("examplesChosen", "Beispiele", get_examples()[,1], multiple = TRUE)
+  })
+  
+  get_selected <- function(){
+    f <- which(get_examples()$Name %in% input$examplesChosen)
+    return(get_examples()[f,1:4])
+  }
+  
+  output$examplesChosenTable <- DT::renderDataTable({
+    DT::datatable(get_selected(), selection = "none", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+  })
+  
+  output$infoSection <- renderUI({
+    column(width = 12,
+      infoBox("Anzahl Beispiele", value = length(input$examplesChosen), color = "aqua"),
+      infoBox("Punkte gesamt", value = sum(get_selected()[3]), color = "green")
+    )
+  })
   
   output$pdfviewer <- renderUI(
     tags$iframe(style="height:900px; width:100%", src="Git.pdf")

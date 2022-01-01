@@ -19,8 +19,8 @@ ui  <- dashboardPage(
   dashboardBody(
     tabItems(
       tab_beispieluebersicht,
-      tab_beispieleditor
-      #tab_beispielselector,
+      tab_beispieleditor,
+      tab_beispielselector
       #tab_preview
     )
   )

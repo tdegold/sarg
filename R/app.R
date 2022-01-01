@@ -5,6 +5,8 @@ library(shiny)
 library(shinyAce)
 library(shinydashboard)
 
+library(pipeR)
+
 source("./config.R")
 
 source("ui/ui.R")
