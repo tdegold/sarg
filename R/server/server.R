@@ -68,11 +68,16 @@ server <- function(input, output, session) {
   
   get_selected <- function(){
     f <- which(get_examples()$Name %in% input$examplesChosen)
-    return(get_examples()[f,1:4])
+    return(get_examples()[f,])
   }
   
   output$examplesChosenTable <- DT::renderDataTable({
-    DT::datatable(get_selected(), selection = "none", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+    DT::datatable(get_selected()[,1:4], selection = "none", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+  })
+  
+  observeEvent(input$generatePDF, {
+    files <- paste0(get_selected()[,5],".Rmd")
+    exams2pdf(files, n=2, dir = NOPS_PATH, name = "DEMO", points = TRUE, template = "exam")
   })
   
   output$infoSection <- renderUI({
