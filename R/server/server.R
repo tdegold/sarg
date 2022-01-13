@@ -79,6 +79,7 @@ server <- function(input, output, session) {
     files <- paste0(get_selected()[,5],".Rmd")
     exams2pdf(files, n=2, dir = NOPS_PATH, 
               name = c("sa_au", "sa_lo"), template = c("exam", "solution"), showpoints = TRUE)
+    showNotification("Exam(s) generated", type = "message")
   })
   
   output$infoSection <- renderUI({
