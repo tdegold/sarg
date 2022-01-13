@@ -80,7 +80,7 @@ server <- function(input, output, session) {
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     exams2pdf(files, n=2, dir = NOPS_PATH, 
-              name = nameX, template = c("exam", "solution"),
+              name = nameX, template = c(paste0(TEMPLATES_PATH,"/tgm_exam"), "solution"),
               header = list(
                 Date = dateX,
                 ID = function(i) c("A", "B")[i]
