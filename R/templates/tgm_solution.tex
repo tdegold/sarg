@@ -4,8 +4,8 @@
 \usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath}
 
 %% new environments
-\newenvironment{question}{\item \textbf{Problem}\newline}{}
-\newenvironment{solution}{\textbf{Solution}\newline}{}
+\newenvironment{question}{\item \textbf{Beispiel}\newline}{}
+\newenvironment{solution}{\textbf{Lösung}\newline}{\newpage}
 \newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 
 %% paragraphs
@@ -77,8 +77,8 @@
 \makeatother
 
 %% headings
-\markboth{\textnormal{\bf \large Statistics Exam: \myID}}%
-{\textnormal{\bf \large Statistics Exam: \myID}}
+\markboth{\textnormal{\bf \large Schularbeit: \myID}}%
+{\textnormal{\bf \large Schularbeit: \myID}}
 \pagestyle{myheadings}
 
 \begin{document}
@@ -86,16 +86,17 @@
 %% title page
 \thispagestyle{empty}
 {\sf
-\textbf{\LARGE{R University}}
+\textbf{\LARGE{TGM - Informationstechnologie}}
 
-\textbf{\large{Statistics Exam \myDate \hfill Exam ID \myID}}
+\textbf{\large{Schularbeit \myDate \hfill Gruppe \myID}}
 
 \vspace*{2cm}
 
 \begin{tabular}{p{14cm}}
-\textbf{Name:} \hrule \\[1.5cm]
-\textbf{Student ID:} \hrule \\[1.5cm]
-\textbf{Signature:} \hrule  \\[1.5cm]
+\textbf{Name und Klasse:} \hrule \\[1.5cm]
+\textbf{Note:} \hrule \\[1.5cm]
+\textbf{Unterschrift:} \hrule  \\[1.5cm]
+\par{Platzhalter, Rechtliches}
 \end{tabular}
 
 \vspace*{1cm}
