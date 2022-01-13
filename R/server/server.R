@@ -77,7 +77,8 @@ server <- function(input, output, session) {
   
   observeEvent(input$generatePDF, {
     files <- paste0(get_selected()[,5],".Rmd")
-    exams2pdf(files, n=2, dir = NOPS_PATH, name = "DEMO", points = TRUE, template = "exam")
+    exams2pdf(files, n=2, dir = NOPS_PATH, 
+              name = c("sa_au", "sa_lo"), template = c("exam", "solution"), showpoints = TRUE)
   })
   
   output$infoSection <- renderUI({
