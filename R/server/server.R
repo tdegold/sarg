@@ -88,6 +88,11 @@ server <- function(input, output, session) {
     showNotification("Exam(s) generated", type = "message")
   })
   
+  observeEvent(input$generateMOODLE, {
+    files <- paste0(get_selected()[,5],".Rmd")
+    exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = TRUE)
+  })
+  
   output$infoSection <- renderUI({
     column(width = 12,
       infoBox("Anzahl Beispiele", value = length(input$examplesChosen), color = "aqua"),

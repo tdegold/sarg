@@ -6,5 +6,6 @@ tab_beispielselector <- tabItem(tabName = "tab_beispielselector",
   ),
   DT::dataTableOutput("examplesChosenTable"),
   uiOutput("infoSection"),
-  actionButton("generatePDF", "PDF generieren", class = "btn-success")
+  actionButton("generatePDF", "PDF generieren", class = "btn-success"),
+  actionButton("generateMOODLE", "Moodle generieren (WiP!)", class = "btn-success")
 )
