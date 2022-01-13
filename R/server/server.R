@@ -77,8 +77,14 @@ server <- function(input, output, session) {
   
   observeEvent(input$generatePDF, {
     files <- paste0(get_selected()[,5],".Rmd")
+    dateX <- as.character(input$examDate)
+    nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     exams2pdf(files, n=2, dir = NOPS_PATH, 
-              name = c("sa_au", "sa_lo"), template = c("exam", "solution"), showpoints = TRUE)
+              name = nameX, template = c("exam", "solution"),
+              header = list(
+                Date = dateX,
+                ID = function(i) c("A", "B")[i]
+              ))
     showNotification("Exam(s) generated", type = "message")
   })
   
