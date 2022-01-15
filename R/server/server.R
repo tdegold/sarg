@@ -82,8 +82,9 @@ server <- function(input, output, session) {
     exams2pdf(files, n=2, dir = NOPS_PATH, 
               name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
               header = list(
-                Date = dateX,
-                ID = function(i) c("A", "B")[i]
+                Date = format.Date(dateX, format = "%d. %m. %Y"),
+                ID = function(i) c("A", "B")[i],
+                Title = input$examName
               ))
     showNotification("Exam(s) generated", type = "message")
   })

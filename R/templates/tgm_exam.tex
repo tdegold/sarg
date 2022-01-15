@@ -67,18 +67,21 @@
 \makeatletter
 \newcommand{\ID}[1]{\def\@ID{#1}}
 \newcommand{\Date}[1]{\def\@Date{#1}}
+\newcommand{\Title}[1]{\def\@Title{#1}}
 \ID{00001}
-\Date{YYYY-MM-DD}
+\Date{DD. MM. YYYY}
+\Title{Schularbeit}
 
 %% \exinput{header}
 
 \newcommand{\myID}{\@ID}
 \newcommand{\myDate}{\@Date}
+\newcommand{\myTitle}{\@Title}
 \makeatother
 
 %% headings
-\markboth{\textnormal{\bf \large Schularbeit: \myID}}%
-{\textnormal{\bf \large Schularbeit: \myID}}
+\markboth{\textnormal{\bf \large \myTitle: \myID}}%
+{\textnormal{\bf \large \myTitle: \myID}}
 \pagestyle{myheadings}
 
 \begin{document}
@@ -88,7 +91,7 @@
 {\sf
 \textbf{\LARGE{TGM - Informationstechnologie}}
 
-\textbf{\large{Schularbeit \myDate \hfill Gruppe \myID}}
+\textbf{\large{\myTitle \, am \myDate \hfill Gruppe \myID}}
 
 \vspace*{2cm}
 
