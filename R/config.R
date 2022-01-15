@@ -1,4 +1,4 @@
 EXAMPLES_PATH <- "../examples/"
 TEMP_PATH <- "temp"
-NOPS_PATH <- "nops_pdf"
+NOPS_PATH <- "../pdf"
 TEMPLATES_PATH <- "templates"
