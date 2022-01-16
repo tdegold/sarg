@@ -1,4 +1,7 @@
 ```{r data generation, echo = FALSE, results = "hide"}
+pts <- 1
+pts_string <- sprintf("_(%s Pt.)_", pts)
+
 n <- sample(120:250, 1)
 mu <- sample(c(125, 200, 250, 500, 1000), 1)
 y <- rnorm(n,
@@ -12,7 +15,7 @@ tstat <- round((Mean - mu)/sqrt(Var/n), digits = 3)
 
 Question
 ========
-A machine fills milk into `r mu`ml packages. It is suspected that the 
+`r pts_string` A machine fills milk into `r mu`ml packages. It is suspected that the 
 machine is not working correctly and that the amount of milk filled differs 
 from the setpoint $\mu_0 = `r mu`$. A sample of $`r n`$ packages 
 filled by the machine are collected. The sample mean $\bar{y}$ is equal to 
