@@ -1,5 +1,5 @@
 tab_beispieluebersicht <- tabItem(tabName = "tab_beispieluebersicht",
-  h1("Examples"),
+  h1("Beispiele"),
   br(),
   DT::dataTableOutput("tab_examples"),
   br(),

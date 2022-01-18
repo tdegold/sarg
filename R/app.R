@@ -4,6 +4,8 @@ library(rmarkdown)
 library(shiny)
 library(shinyAce)
 library(shinydashboard)
+library(xtable)
+library(stringr)
 
 library(pipeR)
 

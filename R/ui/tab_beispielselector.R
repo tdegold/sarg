@@ -1,7 +1,9 @@
 tab_beispielselector <- tabItem(tabName = "tab_beispielselector",
   fluidRow(
     column(4, uiOutput("exampleSelector")),
-    column(4, textInput("examName", label = "Name der Schularbeit", value = "Schularbeit")),
+    column(4, selectInput("examClass", label = "Jahrgang", c("1xHIT", "2xHIT", "3xHIT", "4xHIT", "5xHIT")),
+           textInput("examName", label = "Name der Schularbeit", value = "x. Schularbeit AM"),
+           textInput("examKomp", label = "Kompetenzbereich", value = "S03B: Trigonometrie")),
     column(4, dateInput("examDate", label = "Datum der Schularbeit", value = Sys.Date(), format = "dd. mm. yyyy", language = "de"))
   ),
   DT::dataTableOutput("examplesChosenTable"),

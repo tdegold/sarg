@@ -1,7 +1,7 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath}
+\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath, hyperref, enumitem}
 
 %% new environments
 \newenvironment{question}{\item \textbf{Beispiel}\newline}{}
@@ -68,20 +68,29 @@
 \newcommand{\ID}[1]{\def\@ID{#1}}
 \newcommand{\Date}[1]{\def\@Date{#1}}
 \newcommand{\Title}[1]{\def\@Title{#1}}
+\newcommand{\Komp}[1]{\def\@Komp{#1}}
+\newcommand{\Class}[1]{\def\@Class{#1}}
+\newcommand{\TableDir}[1]{\def\@TableDir{#1}}
 \ID{00001}
-\Date{YYYY-MM-DD}
+\Date{DD. MM. YYYY}
 \Title{Schularbeit}
+\Komp{S03B: Test}
+\Class{2xHIT}
+\TableDir{placeholder}
 
 %% \exinput{header}
 
 \newcommand{\myID}{\@ID}
 \newcommand{\myDate}{\@Date}
 \newcommand{\myTitle}{\@Title}
+\newcommand{\myKomp}{\@Komp}
+\newcommand{\myClass}{\@Class}
+\newcommand{\myTableDir}{\@TableDir}
 \makeatother
 
 %% headings
 \markboth{\textnormal{\bf \large \myTitle: \myID}}%
-{\textnormal{\bf \large \myTitle: \myID}}
+{\textnormal{\bf \large Lösung zu \myTitle: \myID}}
 \pagestyle{myheadings}
 
 \begin{document}
@@ -91,21 +100,42 @@
 {\sf
 \textbf{\LARGE{TGM - Informationstechnologie}}
 
-\textbf{\large{\myTitle \, am \myDate \hfill Gruppe \myID}}
+\textbf{\large{ Lösung zu \myTitle \, am \myDate \hfill Gruppe \myID}}
 
 \vspace*{2cm}
 
 \begin{tabular}{p{14cm}}
-\textbf{Name und Klasse:} \hrule \\[1.5cm]
-\textbf{Note:} \hrule \\[1.5cm]
-\textbf{Unterschrift:} \hrule  \\[1.5cm]
-\par{Platzhalter, Rechtliches}
+%\textbf{Name und Klasse:} \hrule \\[1.5cm]
+%\textbf{Note:} \hrule \\[1.5cm]
+%\textbf{Unterschrift:} \hrule  \\[1.5cm]
+\par{%
+Handreichung zur Korrektur:
+Für die Korrektur und die Bewertung sind die am Prüfungstag auf \url{https://korrektur.srdp.at} veröffentlichten Unterlagen zu verwenden. 
+
+\begin{enumerate}
+\item In der Lösungserwartung ist ein möglicher Lösungsweg angegeben. Andere richtige Lösungswege sind als gleichwertig anzusehen. Im Zweifelsfall kann die Auskunft des Helpdesks in Anspruch genommen werden.
+\item Der Lösungsschlüssel ist verbindlich unter Beachtung folgender Vorgangsweisen anzuwenden:
+  \begin{enumerate}[label=\alph*)]
+    \item Punkte sind zu vergeben, wenn die jeweilige Handlungsanweisung in der Bearbeitung richtig umgesetzt ist.
+    \item Berechnungen im offenen Antwortformat ohne nachvollziehbaren Rechenansatz bzw. ohne nachvollziehbare Dokumentation des Technologieeinsatzes (verwendete Ausgangsparameter und die verwendete Technologiefunktion müssen angegeben sein) sind mit null Punkten zu bewerten.
+    \item Werden zu einer Teilaufgabe mehrere Lösungen von der Prüfungskandidatin / vom Prüfungskandidaten angeboten und nicht alle diese Lösungen sind richtig, so ist diese Teilaufgabe mit null Punkten zu bewerten, sofern die richtige Lösung nicht klar als solche hervorgehoben ist.
+    \item Bei abhängiger Punktevergabe gilt das Prinzip des Folgefehlers. Wird von der Prüfungskandidatin / vom Prüfungskandidaten beispielsweise zu einem Kontext ein falsches Modell aufgestellt, mit diesem Modell aber eine richtige Berechnung durchgeführt, so ist der Berechnungspunkt zu vergeben, wenn das falsch aufgestellte Modell die Berechnung nicht vereinfacht.
+    \item Werden von der Prüfungskandidatin / vom Prüfungskandidaten kombinierte Handlungsanweisungen in einem Lösungsschritt erbracht, so sind alle Punkte zu vergeben, auch wenn der Lösungsschlüssel Einzelschritte vorgibt.
+    \item Abschreibfehler, die aufgrund der Dokumentation der Prüfungskandidatin / des Prüfungskandidaten als solche identifizierbar sind, sind ohne Punkteabzug zu bewerten, wenn sie zu keiner Vereinfachung der Aufgabenstellung führen.
+    \item Rundungsfehler sind zu vernachlässigen, wenn die Rundung nicht explizit eingefordert ist.
+    \item Jedes Diagramm bzw. jede Skizze, die Lösung einer Handlungsanweisung ist, muss eine qualitative Achsenbeschriftung enthalten, andernfalls ist dies mit null Punkten zu bewerten.
+    \item Die Angabe von Einheiten ist bei der Punktevergabe zu vernachlässigen, sofern sie nicht explizit eingefordert ist.
+  \end{enumerate}
+\end{enumerate}
+
+}
+
 \end{tabular}
 
 \vspace*{1cm}
 
-%% \exinput{questionnaire}
 }
+
 \newpage
 
 \begin{enumerate}

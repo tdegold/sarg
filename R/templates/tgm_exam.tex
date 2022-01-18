@@ -1,7 +1,20 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath}
+\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,multirow}
+
+\makeatletter
+\newcommand*{\radiobutton}{%
+  \@ifstar{\@radiobutton0}{\@radiobutton1}%
+}
+\newcommand*{\@radiobutton}[1]{%
+  \begin{tikzpicture}
+    \pgfmathsetlengthmacro\radius{height("X")/2}
+    \draw[radius=\radius] circle;
+    \ifcase#1 \fill[radius=.6*\radius] circle;\fi
+  \end{tikzpicture}%
+}
+\makeatother
 
 %% new environments
 \newenvironment{question}{\item \textbf{Beispiel}\newline}{\newpage}
@@ -68,15 +81,24 @@
 \newcommand{\ID}[1]{\def\@ID{#1}}
 \newcommand{\Date}[1]{\def\@Date{#1}}
 \newcommand{\Title}[1]{\def\@Title{#1}}
+\newcommand{\Komp}[1]{\def\@Komp{#1}}
+\newcommand{\Class}[1]{\def\@Class{#1}}
+\newcommand{\TableDir}[1]{\def\@TableDir{#1}}
 \ID{00001}
 \Date{DD. MM. YYYY}
 \Title{Schularbeit}
+\Komp{S03B: Test}
+\Class{2xHIT}
+\TableDir{placeholder}
 
 %% \exinput{header}
 
 \newcommand{\myID}{\@ID}
 \newcommand{\myDate}{\@Date}
 \newcommand{\myTitle}{\@Title}
+\newcommand{\myKomp}{\@Komp}
+\newcommand{\myClass}{\@Class}
+\newcommand{\myTableDir}{\@TableDir}
 \makeatother
 
 %% headings
@@ -89,22 +111,67 @@
 %% title page
 \thispagestyle{empty}
 {\sf
-\textbf{\LARGE{TGM - Informationstechnologie}}
 
-\textbf{\large{\myTitle \, am \myDate \hfill Gruppe \myID}}
+\begin{table}
+\begin{tabularx}{\linewidth}{rXXl}
+		                  & \textbf{\myTitle} & \myDate & Gruppe \myID  \\[1mm]
+		\large{\myClass}	&								    & 			  &				        \\[1mm]	
+		                  & Name:							& Klasse: &				        \\
+		\\
+\end{tabularx}
+\end{table}
 
-\vspace*{2cm}
+%\begin{table}
+%  \input{\myTableDir}
+%  \hfill
+%  \begin{tabular}[t]{|c|c|}
+%    \hline
+%    Punkte  & Note  \\ \hline
+%    36-40   & 1     \\ \hline
+%    31-35   & 2     \\ \hline
+%    26-30   & 3     \\ \hline   
+%    21-25   & 4     \\ \hline
+%    0-20    & 5     \\ \hline   
+%  \end{tabular}
+%\end{table}
 
-\begin{tabular}{p{14cm}}
-\textbf{Name und Klasse:} \hrule \\[1.5cm]
-\textbf{Note:} \hrule \\[1.5cm]
-\textbf{Unterschrift:} \hrule  \\[1.5cm]
-\par{Platzhalter, Rechtliches}
+\input{\myTableDir}
+\hfill
+\begin{tabular}{|c|c|}
+  \hline
+  Punkte  & Note  \\ \hline
+  36-40   & 1     \\ \hline
+  31-35   & 2     \\ \hline
+  26-30   & 3     \\ \hline   
+  21-25   & 4     \\ \hline
+  0-20    & 5     \\ \hline   
 \end{tabular}
 
-\vspace*{1cm}
+\hrule
 
-%% \exinput{questionnaire}
+\vspace*{5mm}
+
+\par{\underline{Information zum Kompetenzbereich / zu den Kompetenzbereichen}, die Gegenstand der Schularbeit sind: Die Beispiele dieser Schularbeit beziehen sich auf den Kompetenzbereich \textbf{\myKomp}.
+Zur positiven Absolvierung der Schularbeit müssen die Anforderung betreffend die Erfassung und Anwendung des Lehrstoffes sowie betreffend die Durchführung der Aufgaben in den wesentlichen Bereichen (d.h. in den Grundkompetenzen dieses Kompetenzbereiches) überwiegend erfüllt sein. Das Beispiel 1 dieser Schularbeit enthält ausschließlich Teilaufgaben, mit denen die Erfüllung der Grundkompetenzen dieses Kompetenzbereiches nachgewiesen werden kann.} \\[5mm]
+
+\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt]
+Der Nachweis der Erfüllung der Grundkompetenzen des Kompetenzbereiches \textbf{\myKomp} wurde \\
+  \begin{center}
+    \radiobutton \, erbracht \quad \radiobutton \, nicht erbracht
+  \end{center}
+\end{tcolorbox}
+
+\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt]
+Gesamtnote: \\
+\end{tcolorbox}
+
+\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt]
+Kentnissnahme des/der \\
+Erziehungsberechtigten \\
+oder der eigenberechtigten \\
+Schüler
+\end{tcolorbox}
+
 }
 \newpage
 

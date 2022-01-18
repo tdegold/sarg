@@ -75,23 +75,61 @@ server <- function(input, output, session) {
     DT::datatable(get_selected()[,1:4], selection = "none", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
   })
   
+  punkteTable <- function(x){
+    d1 <- c("Punkte für Beispiel")
+    for(i in 1:length(x)){
+      d1 <- cbind(d1, as.character(i))
+    }
+    d1 <- cbind(d1, "Summe")
+    d2 <- data.frame("maximal erreichbar:")
+    asum <- 0
+    for(ex in x){
+      meta <- exams::read_metainfo(ex)
+      asum = asum + sum(meta$points)
+      d2 <- cbind(d2, as.character(sum(meta$points)))
+    }
+    d2 <- cbind(d2, as.character(asum))
+    names(d2) <- 1:length(d2)
+    d3 <- data.frame("erreicht:")
+    for(i in 1:(length(d2)-1)){
+      d3 <- cbind(d3, "")
+    }
+    names(d3) <- 1:length(d3)
+    d <- rbind(d2, d3)
+    names(d) <- d1
+    table <- xtable(d)
+    format <- "|c|l"
+    for(i in 1:(length(d)-1)){
+      format <- paste0(format, "|c")
+    }
+    format <- paste0(format, "|")
+    align(table) <- format
+    temf <- tempfile()
+    print(table, include.rownames = FALSE, hline.after = c(-1:dim(d)[1]), floating = FALSE, file = temf)
+    return(str_replace_all(temf, "\\\\", "/"))
+  }
+  
   observeEvent(input$generatePDF, {
     files <- paste0(get_selected()[,5],".Rmd")
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
+    tableX <- as.character(punkteTable(files))
     exams2pdf(files, n=2, dir = NOPS_PATH, 
               name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
               header = list(
                 Date = format.Date(dateX, format = "%d. %m. %Y"),
                 ID = function(i) c("A", "B")[i],
-                Title = input$examName
+                Title = input$examName,
+                Komp = input$examKomp,
+                Class = input$examClass,
+                TableDir = tableX
               ))
     showNotification("Exam(s) generated", type = "message")
   })
   
   observeEvent(input$generateMOODLE, {
     files <- paste0(get_selected()[,5],".Rmd")
-    exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = TRUE)
+    exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = FALSE)
   })
   
   output$infoSection <- renderUI({
