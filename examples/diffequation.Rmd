@@ -1,0 +1,64 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r data generation, echo = FALSE, results = "hide"}
+library(rim)
+## parameters
+tu <- sample(20:24, 1)
+ti <- sample(57:68, 1)
+## solution
+command <- paste0("ic1(ode2('diff(T,t,1)=k*(T-",tu,"),T,t),t=0,T=",ti,"),expand;")
+res <- maxima.get(command)
+```
+
+Meta-information
+================
+extype: string
+exsolution: `r substr(res$wtl$linear, 7, 10000)`
+exname: Maxima Differential equation
+extol: 0.01
+expoints: 1
+exsection: default|maxima
+
+Question
+========
+Construct and solve the differential equation.
+\hrule 
+
+\vspace*{2mm}
+
+The rate of change of temperature of a cup of tea is proportional to the differene between its temperature and room temperature. When the tea is served it has a temperature of `r ti` and room temperature is `r tu`.
+
+Solution
+========
+The differential equation is Newton's law of cooling which states the following connection
+$$
+\begin{aligned}
+\frac{d}{dt}T(t) &= k\cdot\left(T_U-T(t)\right)
+\end{aligned}
+$$
+If we substitute `r tu` for the surrounding temperature we get
+
+$$
+\begin{aligned}
+\frac{d}{dt}T(t) &= k\cdot\left(`r tu`-T(t)\right)
+\end{aligned}
+$$
+Now this formula can be expressed in Maxima as
+
+```
+dgl:'diff(T,t,1)=k*(`r tu`-T);
+```
+
+Using commands `ode2` and `ic1` the solution can be calculated.
+
+```
+alg:ode2(dgl,T,t);
+spe:ic1(alg, t=0,T=`r ti`);
+```
+
+These result in
+
+`r res$wol$latex`

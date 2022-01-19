@@ -5,11 +5,20 @@ b <- sample(seq(2, 4, 0.1), 1)
 c <- sample(seq(0.5, 0.8, 0.01), 1)
 ## solution
 res <- exp(b * c) * (a * c^(a-1) + b * c^a)
+
+x <- seq(0,3.14,0.0001)
+y <- 2*sin(2*x+2)+2
 ```
 
 Question
 ========
 What is the derivative of $f(x) = x^{`r a`} e^{`r b` x}$, evaluated at $x = `r c`$?
+
+```{r contourplot, echo = FALSE, fig.height = 5, fig.width = 5, fig.path = "", fig.cap = ""}
+plot(y~x, type = "l", col="red", lwd=3, xlim=c(0,3.14))
+par(new=T)
+plot(x~y, type = "l", col="green", lwd=3, xlim=c(0,3.14), axes=FALSE)
+```
 
 Solution
 ========

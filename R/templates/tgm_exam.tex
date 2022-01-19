@@ -1,7 +1,7 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,multirow}
+\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,enumitem}
 
 \makeatletter
 \newcommand*{\radiobutton}{%
@@ -17,7 +17,7 @@
 \makeatother
 
 %% new environments
-\newenvironment{question}{\item \textbf{Beispiel}\newline}{\newpage}
+\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}\newpage}
 \newenvironment{solution}{\comment}{\endcomment}
 \newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 
@@ -121,20 +121,6 @@
 \end{tabularx}
 \end{table}
 
-%\begin{table}
-%  \input{\myTableDir}
-%  \hfill
-%  \begin{tabular}[t]{|c|c|}
-%    \hline
-%    Punkte  & Note  \\ \hline
-%    36-40   & 1     \\ \hline
-%    31-35   & 2     \\ \hline
-%    26-30   & 3     \\ \hline   
-%    21-25   & 4     \\ \hline
-%    0-20    & 5     \\ \hline   
-%  \end{tabular}
-%\end{table}
-
 \input{\myTableDir}
 \hfill
 \begin{tabular}{|c|c|}
@@ -175,7 +161,7 @@ Schüler
 }
 \newpage
 
-\begin{enumerate}
+\begin{enumerate}[leftmargin=*]
 
 %% \exinput{exercises}
 

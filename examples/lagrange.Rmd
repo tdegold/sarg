@@ -133,7 +133,6 @@ lines(c(0,L),c(K,K), lty=3)
 points(L, K, pch = 19, col = "red")
 ```
 
-
 Meta-information
 ================
 extype: num

@@ -1,13 +1,13 @@
 library(DT)
 library(exams)
+library(pipeR)
+library(rim)
 library(rmarkdown)
 library(shiny)
 library(shinyAce)
 library(shinydashboard)
-library(xtable)
 library(stringr)
-
-library(pipeR)
+library(xtable)
 
 source("./config.R")
 
