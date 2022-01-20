@@ -5,6 +5,7 @@ output:
 ---
 ```{r data generation, echo = FALSE, results = "hide"}
 library(rim)
+maxima.stop()
 ## parameters
 tu <- sample(20:24, 1)
 ti <- sample(57:68, 1)

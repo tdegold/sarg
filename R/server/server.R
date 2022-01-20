@@ -114,6 +114,34 @@ server <- function(input, output, session) {
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     tableX <- as.character(punkteTable(files))
+    if(input$examSplitMaxima){
+      f <- str_which(get_selected()$Section, "maxima")
+      print(get_selected())
+      print(f)
+      filesMaxima <- paste0(get_selected()[f,5],".Rmd")
+      filesNormal <- paste0(get_selected()[-f,5],".Rmd")
+      nameMaxima <- paste0(input$examName, "_", dateX, c("_maxima_au", "_maxima_lo"))
+      exams2pdf(filesNormal, n=2, dir = NOPS_PATH, 
+                name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
+                header = list(
+                  Date = format.Date(dateX, format = "%d. %m. %Y"),
+                  ID = function(i) c("A", "B")[i],
+                  Title = paste0(input$examName, " Teil 1"),
+                  Komp = input$examKomp,
+                  Class = input$examClass,
+                  TableDir = tableX
+                ))
+      exams2pdf(filesMaxima, n=2, dir = NOPS_PATH, 
+                name = nameMaxima, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
+                header = list(
+                  Date = format.Date(dateX, format = "%d. %m. %Y"),
+                  ID = function(i) c("A", "B")[i],
+                  Title = paste0(input$examName, " Teil 2"),
+                  Komp = input$examKomp,
+                  Class = input$examClass,
+                  TableDir = tableX
+                ))
+    }else{
     exams2pdf(files, n=2, dir = NOPS_PATH, 
               name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
               header = list(
@@ -124,6 +152,7 @@ server <- function(input, output, session) {
                 Class = input$examClass,
                 TableDir = tableX
               ))
+    }
     showNotification("Exam(s) generated", type = "message")
   })
   
