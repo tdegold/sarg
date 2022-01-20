@@ -133,9 +133,9 @@ server <- function(input, output, session) {
   })
   
   output$infoSection <- renderUI({
-    column(width = 12,
-      infoBox("Anzahl Beispiele", value = length(input$examplesChosen), color = "aqua"),
-      infoBox("Punkte gesamt", value = sum(get_selected()[3]), color = "green")
+    column(width = 6,
+      valueBox(length(input$examplesChosen), "Beispiele", color = "aqua", icon = icon("list-ol")),
+      valueBox(sum(get_selected()[3]), "Punkte gesamt", color = "green", icon = icon("chart-pie"))
     )
   })
   
