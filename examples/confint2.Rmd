@@ -40,6 +40,8 @@ Answerlist
 * What is the lower confidence bound?
 * What is the upper confidence bound?
 
+\newpage
+
 Solution
 ========
 The $95\%$ confidence interval for the average expenses $\mu$ is

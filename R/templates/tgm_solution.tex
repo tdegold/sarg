@@ -1,10 +1,10 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath, hyperref, enumitem}
+\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath, hyperref, enumitem, tcolorbox}
 
 %% new environments
-\newenvironment{question}{\item \textbf{Beispiel}\newline}{}
+\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
 \newenvironment{solution}{\textbf{Lösung}\newline}{\newpage}
 \newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 

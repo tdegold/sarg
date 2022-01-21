@@ -1,7 +1,6 @@
 library(DT)
 library(exams)
 library(pipeR)
-library(rim)
 library(rmarkdown)
 library(shiny)
 library(shinyAce)

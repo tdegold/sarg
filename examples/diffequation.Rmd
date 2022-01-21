@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 ```{r data generation, echo = FALSE, results = "hide"}
 library(rim)
 maxima.stop()

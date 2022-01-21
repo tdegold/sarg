@@ -132,7 +132,7 @@ server <- function(input, output, session) {
                   TableDir = tableX
                 ))
       exams2pdf(filesMaxima, n=2, dir = NOPS_PATH, 
-                name = nameMaxima, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
+                name = nameMaxima, template = paste0(TEMPLATES_PATH,c("/tgm_maxima", "/tgm_solution")),
                 header = list(
                   Date = format.Date(dateX, format = "%d. %m. %Y"),
                   ID = function(i) c("A", "B")[i],
