@@ -6,7 +6,6 @@ tab_beispielselector <- tabItem(tabName = "tab_beispielselector",
            textInput("examKomp", label = "Kompetenzbereich", value = "S03B: Trigonometrie")),
     column(4, dateInput("examDate", label = "Datum der Schularbeit", value = Sys.Date(), format = "dd. mm. yyyy", language = "de"),
            strong("Maxima-Einstellungen"),
-           checkboxInput("examInclMaxima", label = "Schularbeit mit Maxima?"),
            checkboxInput("examSplitMaxima", label = "Maxima-Teil separat?"))
   ),
   DT::dataTableOutput("examplesChosenTable"),

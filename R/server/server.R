@@ -114,8 +114,8 @@ server <- function(input, output, session) {
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     tableX <- as.character(punkteTable(files))
+    f <- str_which(get_selected()$Section, "maxima")
     if(input$examSplitMaxima){
-      f <- str_which(get_selected()$Section, "maxima")
       print(get_selected())
       print(f)
       filesMaxima <- paste0(get_selected()[f,5],".Rmd")
@@ -151,7 +151,8 @@ server <- function(input, output, session) {
                 Title = input$examName,
                 Komp = input$examKomp,
                 Class = input$examClass,
-                TableDir = tableX
+                TableDir = tableX,
+                InclMaxima = ifelse(length(f)>0, "true", "false")
               ))
     }
     showNotification("Exam(s) generated", type = "message")
