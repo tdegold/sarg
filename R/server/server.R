@@ -139,7 +139,8 @@ server <- function(input, output, session) {
                   Title = paste0(input$examName, " Teil 2"),
                   Komp = input$examKomp,
                   Class = input$examClass,
-                  TableDir = tableX
+                  TableDir = tableX,
+                  EnumStartAt = length(filesNormal)
                 ))
     }else{
     exams2pdf(files, n=2, dir = NOPS_PATH, 
