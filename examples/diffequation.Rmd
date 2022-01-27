@@ -1,22 +1,14 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 library(rim)
-maxima.stop()
 ## parameters
 tu <- sample(20:24, 1)
 ti <- sample(57:68, 1)
+at <- sample(5:10,1)
+ta <- sample(50:55,1)
 ## solution
 command <- paste0("ic1(ode2('diff(T,t,1)=k*(T-",tu,"),T,t),t=0,T=",ti,"),expand;")
 res <- maxima.get(command)
 ```
-
-Meta-information
-================
-extype: string
-exsolution: `r substr(res$wtl$linear, 7, 10000)`
-exname: Maxima Differential equation
-extol: 0.01
-expoints: 1
-exsection: default|maxima
 
 Question
 ========
@@ -25,7 +17,7 @@ Construct and solve the differential equation.
 
 \vspace*{2mm}
 
-The rate of change of temperature of a cup of tea is proportional to the differene between its temperature and room temperature. When the tea is served it has a temperature of `r ti` and room temperature is `r tu`.
+The rate of change of temperature of a cup of tea is proportional to the differene between its temperature and room temperature. When the tea is served it has a temperature of `r ti` and room temperature is `r tu`. After `r at` minutes the cup of tea has a temperature of `r ta`.
 
 Solution
 ========
@@ -44,11 +36,11 @@ $$
 $$
 Now this formula can be expressed in Maxima as
 
-```
+```{maxima}
 dgl:'diff(T,t,1)=k*(`r tu`-T);
 ```
 
-Using commands `ode2` and `ic1` the solution can be calculated.
+Using commands `ode2` and `ic1` the function T can be calculated.
 
 ```
 alg:ode2(dgl,T,t);
@@ -58,3 +50,14 @@ spe:ic1(alg, t=0,T=`r ti`);
 These result in
 
 `r res$wol$latex`
+
+After that we can use the information that after `r at` minutes has `r ta`° to determine the parameter $k$.
+
+Meta-information
+================
+extype: string
+exsolution: `r substr(res$wtl$linear, 7, 10000)`
+exname: Maxima Differential equation
+extol: 0.01
+expoints: 1
+exsection: default|maxima

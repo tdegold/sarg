@@ -12,14 +12,14 @@ ui  <- dashboardPage(
       menuItem("Beispieluebersicht", tabName = "tab_beispieluebersicht", icon = icon("table")),
       menuItem("Beispieleditor", tabName = "tab_beispieleditor", icon = icon("file"), badgeLabel = "WiP!", badgeColor = "red"),
       menuItem("Beispielselektor", tabName = "tab_beispielselector", icon = icon("list")),
-      menuItem("Preview", tabName = "tab_preview", icon = icon("book"))
+      menuItem("Preview", tabName = "tab_preview", icon = icon("book"), badgeLabel = "WiP!", badgeColor = "red")
     )
   ),
   # BODY #
   dashboardBody(
     tabItems(
       tab_beispieluebersicht,
-      tab_beispieleditor,
+      #tab_beispieleditor,
       tab_beispielselector
       #tab_preview
     )
