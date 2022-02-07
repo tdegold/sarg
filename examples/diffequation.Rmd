@@ -36,7 +36,7 @@ $$
 $$
 Now this formula can be expressed in Maxima as
 
-```{maxima}
+```
 dgl:'diff(T,t,1)=k*(`r tu`-T);
 ```
 
