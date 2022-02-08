@@ -1,7 +1,7 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,enumitem}
+\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,enumitem,fancyhdr,lastpage}
 
 \makeatletter
 \newcommand*{\radiobutton}{%
@@ -105,9 +105,11 @@
 \makeatother
 
 %% headings
-\markboth{\textnormal{\bf \large \myTitle: \myID}}%
-{\textnormal{\bf \large \myTitle: \myID}}
-\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{\small{Hinweis: Lösungen müssen der Problemstellung entsprechen und klar erkennbar sein. Ergebnisse sind mit passenden Maßeinheiten anzugeben. Diagramme sind zu beschriften und zu skalieren.}}
+\rfoot{\textbf{\thepage/\pageref{LastPage}}}
 
 \begin{document}
 
@@ -117,9 +119,9 @@
 
 \begin{table}
 \begin{tabularx}{\linewidth}{rXXl}
-		                  & \textbf{\myTitle} & \myDate & Gruppe \myID  \\[1mm]
-		\large{\myClass}	&								    & 			  &				        \\[1mm]	
-		                  & Name:							& Klasse: &				        \\
+		                  & \large{\textbf{\myTitle}} & \large{\myDate} & \large{Gruppe \myID}  \\[1mm]
+		\huge{\myClass}	  &								            &  			          &				                \\[1mm]
+		                  & \large{Name:}							& \large{Klasse:} &				                \\
 		\\
 \end{tabularx}
 \end{table}
@@ -131,9 +133,9 @@
   Punkte  & Note  \\ \hline
   36-40   & 1     \\ \hline
   31-35   & 2     \\ \hline
-  26-30   & 3     \\ \hline   
+  26-30   & 3     \\ \hline
   21-25   & 4     \\ \hline
-  0-20    & 5     \\ \hline   
+  0-20    & 5     \\ \hline
 \end{tabular}
 
 \hrule
@@ -143,7 +145,7 @@
 \begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt]
 \begin{center}
 Für das folgende Beispiel / Für die folgenden Beispiele \\
-ist die Benutzung von \textit{wxMaxima} statthaft und empfohlen
+ist die Benutzung von \textit{wxMaxima} statthaft und empfohlen.
 \end{center}
 \end{tcolorbox}
 

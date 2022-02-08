@@ -35,10 +35,9 @@ $s^2_{n-1}$ is equal to $`r Var`$.
 Determine a $95\%$ confidence interval for the average daily
 expenses (in EUR) of a tourist.
 
-Answerlist
-----------
-* What is the lower confidence bound?
-* What is the upper confidence bound?
+a) What is the lower bound?
+
+\vspace*{7cm}
 
 \newpage
 
@@ -62,10 +61,10 @@ Answerlist
 
 Meta-information
 ============
-extype: cloze
+extype: string
 exclozetype: num|num
-exsolution: `r LB`|`r UB`
+exsolution: `r LB`
 exname: Confidence interval
 extol: 0.01
 exsection: default
-expoints: 1|1
+expoints: 1

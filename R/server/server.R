@@ -104,7 +104,7 @@ server <- function(input, output, session) {
     format <- paste0(format, "|")
     align(table) <- format
     temf <- tempfile()
-    print(table, include.rownames = FALSE, hline.after = c(-1:dim(d)[1]), floating = FALSE, file = temf)
+    print(table, include.rownames = FALSE, hline.after = c(-1:dim(d)[1]), floating = FALSE, file = temf, placement = "t")
     if(Sys.info()[1] == "Windows"){
       return(str_replace_all(temf, "\\\\", "/"))
     }else{

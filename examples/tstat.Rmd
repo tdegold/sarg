@@ -1,6 +1,6 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 pts <- 1
-pts_string <- sprintf("_(%s Pt.)_", pts)
+pts_string <- sprintf("_(%s Pt.)_", sum(pts))
 
 n <- sample(120:250, 1)
 mu <- sample(c(125, 200, 250, 500, 1000), 1)
@@ -12,6 +12,15 @@ Mean <- round(mean(y), digits = 1)
 Var <- round(var(y), digits = 2)
 tstat <- round((Mean - mu)/sqrt(Var/n), digits = 3)
 ```
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(abs(tstat), 3)`
+exname: t statistic
+extol: 0.01
+exsection: default|maxima
+expoints: 1
 
 Question
 ========
@@ -37,12 +46,3 @@ $$
 $$
 The absolute value of the t-test statistic is thus equal to
 `r fmt(abs(tstat), 3)`.
-
-Meta-information
-================
-extype: num
-exsolution: `r fmt(abs(tstat), 3)`
-exname: t statistic
-extol: 0.01
-exsection: default|maxima
-expoints: 1

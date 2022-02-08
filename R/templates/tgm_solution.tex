@@ -1,7 +1,7 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath, hyperref, enumitem, tcolorbox}
+\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath, hyperref, enumitem, tcolorbox, fancyhdr, lastpage}
 
 %% new environments
 \newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
@@ -94,9 +94,10 @@
 \makeatother
 
 %% headings
-\markboth{\textnormal{\bf \large \myTitle: \myID}}%
-{\textnormal{\bf \large Lösung zu \myTitle: \myID}}
-\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\textbf{\thepage/\pageref{LastPage}}}
 
 \begin{document}
 
@@ -115,7 +116,7 @@
 %\textbf{Unterschrift:} \hrule  \\[1.5cm]
 \par{%
 Handreichung zur Korrektur:
-Für die Korrektur und die Bewertung sind die am Prüfungstag auf \url{https://korrektur.srdp.at} veröffentlichten Unterlagen zu verwenden. 
+Für die Korrektur und die Bewertung sind die am Prüfungstag auf \url{https://korrektur.srdp.at} veröffentlichten Unterlagen zu verwenden.
 
 \begin{enumerate}
 \item In der Lösungserwartung ist ein möglicher Lösungsweg angegeben. Andere richtige Lösungswege sind als gleichwertig anzusehen. Im Zweifelsfall kann die Auskunft des Helpdesks in Anspruch genommen werden.
@@ -129,7 +130,6 @@ Für die Korrektur und die Bewertung sind die am Prüfungstag auf \url{https://k
     \item Abschreibfehler, die aufgrund der Dokumentation der Prüfungskandidatin / des Prüfungskandidaten als solche identifizierbar sind, sind ohne Punkteabzug zu bewerten, wenn sie zu keiner Vereinfachung der Aufgabenstellung führen.
     \item Rundungsfehler sind zu vernachlässigen, wenn die Rundung nicht explizit eingefordert ist.
     \item Jedes Diagramm bzw. jede Skizze, die Lösung einer Handlungsanweisung ist, muss eine qualitative Achsenbeschriftung enthalten, andernfalls ist dies mit null Punkten zu bewerten.
-    \item Die Angabe von Einheiten ist bei der Punktevergabe zu vernachlässigen, sofern sie nicht explizit eingefordert ist.
   \end{enumerate}
 \end{enumerate}
 
@@ -144,6 +144,7 @@ Für die Korrektur und die Bewertung sind die am Prüfungstag auf \url{https://k
 \newpage
 
 \begin{enumerate}
+\setcounter{enumi}{\myEnumStartAt}
 
 %% \exinput{exercises}
 
