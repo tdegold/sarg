@@ -76,35 +76,32 @@ server <- function(input, output, session) {
 
   punkteTable <- function(x){
     d1 <- c("Punkte für Beispiel")
-    for(i in 1:length(x)){
-      d1 <- cbind(d1, as.character(i))
-    }
-    d1 <- cbind(d1, "Summe")
+    j <- 1
     d2 <- data.frame("maximal erreichbar:")
     asum <- 0
-    for(ex in x){
-      meta <- exams::read_metainfo(ex)
+    d3 <- data.frame("erreicht:")
+    format <- "|c|l"
+    for(i in x){
+      d1 <- cbind(d1, as.character(j))
+      j <- j+1
+      meta <- exams::read_metainfo(paste0(EXAMPLES_PATH,"/",i))
       asum = asum + sum(meta$points)
       d2 <- cbind(d2, as.character(sum(meta$points)))
-    }
-    d2 <- cbind(d2, as.character(asum))
-    names(d2) <- 1:length(d2)
-    d3 <- data.frame("erreicht:")
-    for(i in 1:(length(d2)-1)){
       d3 <- cbind(d3, "")
+      format <- paste0(format, "|c")
     }
+    d1 <- cbind(d1, "Summe")
+    d2 <- cbind(d2, as.character(asum))
+    d3 <- cbind(d3, "")
+    names(d2) <- 1:length(d2)
     names(d3) <- 1:length(d3)
     d <- rbind(d2, d3)
     names(d) <- d1
     table <- xtable(d)
-    format <- "|c|l"
-    for(i in 1:(length(d)-1)){
-      format <- paste0(format, "|c")
-    }
-    format <- paste0(format, "|")
+    format <- paste0(format, "|c|")
     align(table) <- format
     temf <- tempfile()
-    print(table, include.rownames = FALSE, hline.after = c(-1:dim(d)[1]), floating = FALSE, file = temf, placement = "t")
+    print(table, include.rownames = FALSE, hline.after = c(-1:dim(d)[1]), floating = FALSE, file = temf)
     if(Sys.info()[1] == "Windows"){
       return(str_replace_all(temf, "\\\\", "/"))
     }else{
@@ -119,8 +116,8 @@ server <- function(input, output, session) {
     tableX <- as.character(punkteTable(files))
     f <- str_which(get_selected()$Section, "maxima")
     if(input$examSplitMaxima){
-      filesMaxima <- paste0(get_selected()[f,5],".Rmd")
-      filesNormal <- paste0(get_selected()[-f,5],".Rmd")
+      filesMaxima <- files[f]
+      filesNormal <- files[-f]
       nameMaxima <- paste0(input$examName, "_", dateX, c("_maxima_au", "_maxima_lo"))
 
       exams2pdf(filesNormal, n=2, dir = NOPS_PATH,
