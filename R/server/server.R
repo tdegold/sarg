@@ -16,9 +16,8 @@ server <- function(input, output, session) {
     return(df_examples)
   }
 
-  output$tab_examples <- renderDataTable({
-    temp <- get_examples()[,1:4] # do not display the file-path
-    DT::datatable(temp, selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+  output$tab_examples <- DT::renderDataTable({
+    datatable(get_examples()[,1:4], selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
   })
 
   observe({
