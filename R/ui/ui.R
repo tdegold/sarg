@@ -10,9 +10,9 @@ ui  <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Beispieluebersicht", tabName = "tab_beispieluebersicht", icon = icon("table")),
-      menuItem("Beispieleditor", tabName = "tab_beispieleditor", icon = icon("file"), badgeLabel = "WiP!", badgeColor = "red"),
-      menuItem("Beispielselektor", tabName = "tab_beispielselector", icon = icon("list")),
-      menuItem("Preview", tabName = "tab_preview", icon = icon("book"), badgeLabel = "WiP!", badgeColor = "red")
+      #menuItem("Beispieleditor", tabName = "tab_beispieleditor", icon = icon("file"), badgeLabel = "WiP!", badgeColor = "red"),
+      menuItem("Beispielselektor", tabName = "tab_beispielselector", icon = icon("list"))
+      #menuItem("Preview", tabName = "tab_preview", icon = icon("book"), badgeLabel = "WiP!", badgeColor = "red")
     )
   ),
   # BODY #
