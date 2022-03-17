@@ -1,4 +1,4 @@
-tab_beispielselector <- tabItem(tabName = "tab_beispielselector",
+tab_beispielselector_sa <- tabItem(tabName = "tab_beispielselector_sa",
   fluidRow(
     column(4, uiOutput("exampleSelector")),
     column(4, selectInput("examClass", label = "Jahrgang", c("1xHIT", "2xHIT", "3xHIT", "4xHIT", "5xHIT")),
