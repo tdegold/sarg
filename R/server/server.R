@@ -24,11 +24,11 @@ server <- function(input, output, session) {
   observe({
     req(is.null(input$tab_examples_rows_selected))
     output$ace_editor <- renderUI({
-      h1("First, select an example on the first tab!")
+      h1("Zuerst im ersten Tab ein Beispiel auswählen!")
     })
 
     output$selected_view <- renderUI({
-        h1("No example selected!")
+        h1("Kein Beispiel markiert!")
     })
   })
 
@@ -154,12 +154,13 @@ server <- function(input, output, session) {
                   InclMaxima = ifelse(length(f)>0, "true", "false")
                 ))
     }
-    showNotification("Exam(s) generated", type = "message")
+    showNotification("Schularbeit(en) erstellt", type = "message")
   })
 
   observeEvent(input$generateMOODLE, {
     files <- paste0(get_selected()[,5],".Rmd")
     exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = FALSE)
+    showNotification("Moodle-Quiz erstellt", type = "message")
   })
 
   output$infoSection <- renderUI({
