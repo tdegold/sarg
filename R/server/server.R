@@ -114,13 +114,24 @@ server <- function(input, output, session) {
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     tableX <- as.character(punkteTable(files))
+
+    guid <- str_replace_all(tempfile(pattern="", tmpdir = ""), "\\\\", "")
+    main_dir <- paste0(OUTPUT_PATH, dateX, "_", input$examName, "_", guid)
+    tmpdir <- paste0(main_dir, "/tmp")
+    pdfdir <- paste0(main_dir, "/pdf")
+    texdir <- paste0(main_dir, "/tex")
+    dir.create(main_dir)
+    dir.create(tmpdir)
+    dir.create(pdfdir)
+    dir.create(texdir)
+
     f <- str_which(get_selected()$Section, "maxima")
     if(input$examSplitMaxima){
       filesMaxima <- files[f]
       filesNormal <- files[-f]
       nameMaxima <- paste0(input$examName, "_", dateX, c("_maxima_au", "_maxima_lo"))
 
-      exams2pdf(filesNormal, n=2, dir = NOPS_PATH,
+      exams2pdf(filesNormal, n=2, dir = pdfdir, tdir = tmpdir, texdir = texdir,
                 name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
                 header = list(
                   Date = format.Date(dateX, format = "%d. %m. %Y"),
@@ -130,7 +141,7 @@ server <- function(input, output, session) {
                   Class = input$examClass,
                   TableDir = tableX
                 ))
-      exams2pdf(filesMaxima, n=2, dir = NOPS_PATH,
+      exams2pdf(filesMaxima, n=2, dir = pdfdir, tdir = tmpdir, texdir = texdir,
                 name = nameMaxima, template = paste0(TEMPLATES_PATH,c("/tgm_maxima", "/tgm_solution")),
                 header = list(
                   Date = format.Date(dateX, format = "%d. %m. %Y"),
@@ -142,7 +153,7 @@ server <- function(input, output, session) {
                   EnumStartAt = length(filesNormal)
                 ))
     }else{
-      exams2pdf(files, n=2, dir = NOPS_PATH,
+      exams2pdf(files, n=2, dir = pdfdir, tdir = tmpdir, texdir = texdir,
                 name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
                 header = list(
                   Date = format.Date(dateX, format = "%d. %m. %Y"),
