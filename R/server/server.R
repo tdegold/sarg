@@ -115,7 +115,14 @@ server <- function(input, output, session) {
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     tableX <- as.character(punkteTable(files))
 
-    guid <- str_replace_all(tempfile(pattern="", tmpdir = ""), "\\\\", "")
+    guid <- tempfile(pattern="", tmpdir = "")
+
+    if(Sys.info()[1] == "Windows"){
+      guid <- str_replace_all(guid, "\\\\", "")
+    }else{
+      guid <- str_replace_all(guid, "/", "")
+    }
+
     main_dir <- paste0(OUTPUT_PATH, input$examClass, "_", input$examName, "_", dateX, "_", guid)
     pdfdir <- paste0(main_dir, "/pdf")
     grAdir <- paste0(main_dir, "/grA")
