@@ -116,14 +116,32 @@ server <- function(input, output, session) {
     tableX <- as.character(punkteTable(files))
 
     guid <- str_replace_all(tempfile(pattern="", tmpdir = ""), "\\\\", "")
-    main_dir <- paste0(OUTPUT_PATH, dateX, "_", input$examName, "_", guid)
-    tmpdir <- paste0(main_dir, "/tmp")
+    main_dir <- paste0(OUTPUT_PATH, input$examClass, "_", input$examName, "_", dateX, "_", guid)
     pdfdir <- paste0(main_dir, "/pdf")
-    texdir <- paste0(main_dir, "/tex")
+    grAdir <- paste0(main_dir, "/grA")
+    grBdir <- paste0(main_dir, "/grB")
+
+    grAtex <- paste0(grAdir, "/tex")
+    grBtex <- paste0(grBdir, "/tex")
+
+    grAtexm <- paste0(grAdir, "/texm")
+    grBtexm <- paste0(grBdir, "/texm")
+
     dir.create(main_dir)
-    dir.create(tmpdir)
     dir.create(pdfdir)
-    dir.create(texdir)
+
+    dir.create(grAdir)
+    dir.create(grBdir)
+    dir.create(grAtex)
+    dir.create(grBtex)
+    dir.create(grAtexm)
+    dir.create(grBtexm)
+
+    lookup <- list(
+      gruppe = c("A", "B"),
+      texdir = c(grAtex, grBtex),
+      texdirm =c(grAtexm, grBtexm)
+    )
 
     f <- str_which(get_selected()$Section, "maxima")
     if(input$examSplitMaxima){
@@ -131,39 +149,46 @@ server <- function(input, output, session) {
       filesNormal <- files[-f]
       nameMaxima <- paste0(input$examName, "_", dateX, c("_maxima_au", "_maxima_lo"))
 
-      exams2pdf(filesNormal, n=2, dir = pdfdir, tdir = tmpdir, texdir = texdir,
-                name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
-                header = list(
-                  Date = format.Date(dateX, format = "%d. %m. %Y"),
-                  ID = function(i) c("A", "B")[i],
-                  Title = paste0(input$examName, " Teil 1"),
-                  Komp = input$examKomp,
-                  Class = input$examClass,
-                  TableDir = tableX
-                ))
-      exams2pdf(filesMaxima, n=2, dir = pdfdir, tdir = tmpdir, texdir = texdir,
-                name = nameMaxima, template = paste0(TEMPLATES_PATH,c("/tgm_maxima", "/tgm_solution")),
-                header = list(
-                  Date = format.Date(dateX, format = "%d. %m. %Y"),
-                  ID = function(i) c("A", "B")[i],
-                  Title = paste0(input$examName, " Teil 2"),
-                  Komp = input$examKomp,
-                  Class = input$examClass,
-                  TableDir = tableX,
-                  EnumStartAt = length(filesNormal)
-                ))
+      for (i in 1:2) {
+        exams2pdf(filesNormal, n=1, dir = pdfdir, texdir = lookup$texdir[i],
+                  name = paste0(nameX, "_", lookup$gruppe[i]),
+                  template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
+                  header = list(
+                    Date = format.Date(dateX, format = "%d. %m. %Y"),
+                    ID = lookup$gruppe[i],
+                    Title = paste0(input$examName, " Teil 1"),
+                    Komp = input$examKomp,
+                    Class = input$examClass,
+                    TableDir = tableX
+                  ), )
+        exams2pdf(filesMaxima, n=1, dir = pdfdir, texdir = lookup$texdirm[i],
+                  name = paste0(nameMaxima, "_", lookup$gruppe[i]),
+                  template = paste0(TEMPLATES_PATH,c("/tgm_maxima", "/tgm_solution")),
+                  header = list(
+                    Date = format.Date(dateX, format = "%d. %m. %Y"),
+                    ID = lookup$gruppe[i],
+                    Title = paste0(input$examName, " Teil 2"),
+                    Komp = input$examKomp,
+                    Class = input$examClass,
+                    TableDir = tableX,
+                    EnumStartAt = length(filesNormal)
+                  ))
+      }
     }else{
-      exams2pdf(files, n=2, dir = pdfdir, tdir = tmpdir, texdir = texdir,
-                name = nameX, template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
-                header = list(
-                  Date = format.Date(dateX, format = "%d. %m. %Y"),
-                  ID = function(i) c("A", "B")[i],
-                  Title = input$examName,
-                  Komp = input$examKomp,
-                  Class = input$examClass,
-                  TableDir = tableX,
-                  InclMaxima = ifelse(length(f)>0, "true", "false")
-                ))
+      for (i in 1:2) {
+        exams2pdf(files, n=1, dir = pdfdir, texdir = lookup$texdir[i],
+                  name = paste0(nameX, "_", lookup$gruppe[i]),
+                  template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
+                  header = list(
+                    Date = format.Date(dateX, format = "%d. %m. %Y"),
+                    ID = lookup$gruppe[i],
+                    Title = input$examName,
+                    Komp = input$examKomp,
+                    Class = input$examClass,
+                    TableDir = tableX,
+                    InclMaxima = ifelse(length(f)>0, "true", "false")
+                  ))
+      }
     }
     showNotification("Exam(s) generated", type = "message")
   })
