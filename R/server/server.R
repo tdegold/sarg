@@ -101,6 +101,8 @@ server <- function(input, output, session) {
   }
 
   reorder <- function(x){
+    if(input$orderText == ""){ return(x)}
+
     new <- as.integer(str_split(input$orderText, ",")[[1]])
     return(x[new])
   }
