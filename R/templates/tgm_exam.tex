@@ -1,8 +1,25 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,enumitem, ifthen, fancyhdr, lastpage}
+\usepackage{
+  a4wide,
+  color,
+  verbatim,
+  Sweave,
+  url,
+  xargs,
+  amsmath,
+  tcolorbox,
+  tikz,
+  tabularx,
+  enumitem,
+  ifthen,
+  fancyhdr,
+  lastpage,
+  hyperref
+}
 
+%% radiobuttons
 \makeatletter
 \newcommand*{\radiobutton}{%
   \@ifstar{\@radiobutton0}{\@radiobutton1}%
@@ -15,11 +32,6 @@
   \end{tikzpicture}%
 }
 \makeatother
-
-%% new environments
-\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
-\newenvironment{solution}{\comment}{\endcomment}
-\newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 
 %% paragraphs
 \setlength{\parskip}{0.7ex plus0.1ex minus0.1ex}
@@ -105,12 +117,18 @@
 \setboolean{myInclMaxima}{\@InclMaxima}
 \makeatother
 
+%% new environments
+\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
+\newenvironment{solution}{\comment}{\endcomment}
+\newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
+
 %% headings
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \lhead{\small{Hinweis: Lösungen müssen der Problemstellung entsprechen und klar erkennbar sein. Ergebnisse sind mit passenden Maßeinheiten anzugeben. Diagramme sind zu beschriften und zu skalieren.}}
 \rfoot{\textbf{\thepage/\pageref{LastPage}}}
+\lfoot{\myClass \space \myTitle \space \myDate \space Gruppe \space \myID}
 
 \begin{document}
 

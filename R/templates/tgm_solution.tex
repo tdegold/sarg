@@ -1,12 +1,37 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath, hyperref, enumitem, tcolorbox, fancyhdr, lastpage}
+\usepackage{
+  a4wide,
+  color,
+  verbatim,
+  Sweave,
+  url,
+  xargs,
+  amsmath,
+  tcolorbox,
+  tikz,
+  tabularx,
+  enumitem,
+  ifthen,
+  fancyhdr,
+  lastpage,
+  hyperref
+}
 
-%% new environments
-\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
-\newenvironment{solution}{\textbf{Lösung}\newline}{\newpage}
-\newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
+%% radiobuttons
+\makeatletter
+\newcommand*{\radiobutton}{%
+  \@ifstar{\@radiobutton0}{\@radiobutton1}%
+}
+\newcommand*{\@radiobutton}[1]{%
+  \begin{tikzpicture}
+    \pgfmathsetlengthmacro\radius{height("X")/2}
+    \draw[radius=\radius] circle;
+    \ifcase#1 \fill[radius=.6*\radius] circle;\fi
+  \end{tikzpicture}%
+}
+\makeatother
 
 %% paragraphs
 \setlength{\parskip}{0.7ex plus0.1ex minus0.1ex}
@@ -24,7 +49,7 @@
 \renewcommand{\sfdefault}{phv}
 \renewcommand{\rmdefault}{phv}
 
-\newcommand{\extext}[1]{\textbf{\large #1}}
+\newcommand{\extext}[1]{\phantom{\large #1}}
 \newcommandx{\exmchoice}[9][2=-,3=-,4=-,5=-,6=-,7=-,8=-,9=-]{%
                 \mbox{(a) \,\, \framebox[8mm]{\rule[-1mm]{0mm}{5mm} \hspace*{-1.6mm} \extext{#1}} \hspace*{2mm}}%
   \if #2- \else \mbox{(b) \,\, \framebox[8mm]{\rule[-1mm]{0mm}{5mm} \hspace*{-1.6mm} \extext{#2}} \hspace*{2mm}} \fi%
@@ -71,16 +96,16 @@
 \newcommand{\Komp}[1]{\def\@Komp{#1}}
 \newcommand{\Class}[1]{\def\@Class{#1}}
 \newcommand{\TableDir}[1]{\def\@TableDir{#1}}
-\newcommand{\EnumStartAt}[1]{\def\@EnumStartAt{#1}}
 \newcommand{\InclMaxima}[1]{\def\@InclMaxima{#1}}
+\newcommand{\EnumStartAt}[1]{\def\@EnumStartAt{#1}}
 \ID{00001}
 \Date{DD. MM. YYYY}
 \Title{Schularbeit}
 \Komp{S03B: Test}
 \Class{2xHIT}
 \TableDir{placeholder}
-\EnumStartAt{0}
 \InclMaxima{false}
+\EnumStartAt{1}
 
 %% \exinput{header}
 
@@ -90,14 +115,22 @@
 \newcommand{\myKomp}{\@Komp}
 \newcommand{\myClass}{\@Class}
 \newcommand{\myTableDir}{\@TableDir}
+\newboolean{myInclMaxima}
+\setboolean{myInclMaxima}{\@InclMaxima}
 \newcommand{\myEnumStartAt}{\@EnumStartAt}
 \makeatother
+
+%% new environments
+\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
+\newenvironment{solution}{\textbf{Lösung}\newline}{\newpage}
+\newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 
 %% headings
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \rfoot{\textbf{\thepage/\pageref{LastPage}}}
+\lfoot{\myClass \space \myTitle \space \myDate \space Gruppe \space \myID}
 
 \begin{document}
 

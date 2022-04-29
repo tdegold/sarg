@@ -1,8 +1,25 @@
 \documentclass[10pt,a4paper]{article}
 
 %% packages
-\usepackage{a4wide,color,verbatim,Sweave,url,xargs,amsmath,tcolorbox,tikz,tabularx,enumitem,fancyhdr,lastpage}
+\usepackage{
+  a4wide,
+  color,
+  verbatim,
+  Sweave,
+  url,
+  xargs,
+  amsmath,
+  tcolorbox,
+  tikz,
+  tabularx,
+  enumitem,
+  ifthen,
+  fancyhdr,
+  lastpage,
+  hyperref
+}
 
+%% radiobuttons
 \makeatletter
 \newcommand*{\radiobutton}{%
   \@ifstar{\@radiobutton0}{\@radiobutton1}%
@@ -15,11 +32,6 @@
   \end{tikzpicture}%
 }
 \makeatother
-
-%% new environments
-\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
-\newenvironment{solution}{\comment}{\endcomment}
-\newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 
 %% paragraphs
 \setlength{\parskip}{0.7ex plus0.1ex minus0.1ex}
@@ -84,6 +96,7 @@
 \newcommand{\Komp}[1]{\def\@Komp{#1}}
 \newcommand{\Class}[1]{\def\@Class{#1}}
 \newcommand{\TableDir}[1]{\def\@TableDir{#1}}
+\newcommand{\InclMaxima}[1]{\def\@InclMaxima{#1}}
 \newcommand{\EnumStartAt}[1]{\def\@EnumStartAt{#1}}
 \ID{00001}
 \Date{DD. MM. YYYY}
@@ -91,6 +104,7 @@
 \Komp{S03B: Test}
 \Class{2xHIT}
 \TableDir{placeholder}
+\InclMaxima{false}
 \EnumStartAt{1}
 
 %% \exinput{header}
@@ -101,8 +115,15 @@
 \newcommand{\myKomp}{\@Komp}
 \newcommand{\myClass}{\@Class}
 \newcommand{\myTableDir}{\@TableDir}
+\newboolean{myInclMaxima}
+\setboolean{myInclMaxima}{\@InclMaxima}
 \newcommand{\myEnumStartAt}{\@EnumStartAt}
 \makeatother
+
+%% new environments
+\newenvironment{question}{\begin{tcolorbox}[arc=0mm,  standard jigsaw, opacityback=0, boxrule=1pt] \item \textbf{Beispiel}\newline}{\end{tcolorbox}}
+\newenvironment{solution}{\comment}{\endcomment}
+\newenvironment{answerlist}{\renewcommand{\labelenumi}{(\alph{enumi})}\begin{enumerate}}{\end{enumerate}}
 
 %% headings
 \pagestyle{fancy}
@@ -110,6 +131,7 @@
 \renewcommand{\headrulewidth}{0pt}
 \lhead{\small{Hinweis: Lösungen müssen der Problemstellung entsprechen und klar erkennbar sein. Ergebnisse sind mit passenden Maßeinheiten anzugeben. Diagramme sind zu beschriften und zu skalieren.}}
 \rfoot{\textbf{\thepage/\pageref{LastPage}}}
+\lfoot{\myClass \space \myTitle \space \myDate \space Gruppe \space \myID}
 
 \begin{document}
 
