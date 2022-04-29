@@ -13,7 +13,8 @@ server <- function(input, output, session) {
       )
     }
     names(df_examples) <- c("Name", "Section", "Sum of Points", "Type", "File")
-    return(df_examples)
+    # Return them sorted alphabetically by column Name
+    return(df_examples[order(df_examples$Name),])
   }
 
   output$tab_examples <- DT::renderDataTable({
@@ -57,7 +58,11 @@ server <- function(input, output, session) {
   }
 
   output$examplesChosenTable <- DT::renderDataTable({
-    DT::datatable(get_selected()[,1:4], selection = "none", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+    DT::datatable(get_selected()[,1:4],
+                  selection = "none",
+                  options = list(
+                    columnDefs = list(list(visible=FALSE, targets=0)),
+                    ordering = FALSE))
   })
 
   punkteTable <- function(x){
@@ -95,8 +100,14 @@ server <- function(input, output, session) {
     }
   }
 
+  reorder <- function(x){
+    new <- as.integer(str_split(input$orderText, ",")[[1]])
+    return(x[new])
+  }
+
   observeEvent(input$generatePDF, {
     files <- paste0(get_selected()[,5],".Rmd")
+    files <- reorder(files)
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     tableX <- as.character(punkteTable(files))

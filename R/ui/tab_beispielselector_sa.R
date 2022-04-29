@@ -16,6 +16,11 @@ tab_beispielselector_sa <- tabItem(tabName = "tab_beispielselector_sa",
     )
   ),
   fluidRow(
+    column(width = 12,
+           textInput("orderText", label = "Reihenfolge")
+    )
+  ),
+  fluidRow(
      uiOutput("infoSection")
   ),
   fluidRow(
