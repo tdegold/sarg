@@ -16,19 +16,16 @@ server <- function(input, output, session) {
     return(df_examples)
   }
 
-  output$tab_examples <- renderDataTable({
-    temp <- get_examples()[,1:4] # do not display the file-path
-    DT::datatable(temp, selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+  output$tab_examples <- DT::renderDataTable({
+    # do not display the file-path using [,1:4]
+    DT::datatable(get_examples()[,1:4], selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
   })
 
   observe({
     req(is.null(input$tab_examples_rows_selected))
-    output$ace_editor <- renderUI({
-      h1("First, select an example on the first tab!")
-    })
 
     output$selected_view <- renderUI({
-        h1("No example selected!")
+        h1("Kein Beispiel markiert!")
     })
   })
 
@@ -42,17 +39,6 @@ server <- function(input, output, session) {
     output$selected_view <- renderUI({
       exams2html(gen_path(), dir = TEMP_PATH)
       withMathJax(includeHTML(paste0(TEMP_PATH, "/plain81.html")))
-    })
-    # tab_beispieleditor
-    output$ace_editor <- renderUI({
-      tagList(
-      aceEditor("file_content",
-                value = readChar(gen_path(), file.info(gen_path())$size),
-                mode = "r",
-                showLineNumbers = TRUE
-      ),
-      actionButton("ace_save", label = "Update Example", class = "btn-success")
-      )
     })
 
     observeEvent(input$ace_save, {
@@ -197,12 +183,13 @@ server <- function(input, output, session) {
                   ))
       }
     }
-    showNotification("Exam(s) generated", type = "message")
+    showNotification("Schularbeit(en) erstellt", type = "message")
   })
 
   observeEvent(input$generateMOODLE, {
     files <- paste0(get_selected()[,5],".Rmd")
     exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = FALSE)
+    showNotification("Moodle-Quiz erstellt", type = "message")
   })
 
   output$infoSection <- renderUI({
@@ -211,8 +198,4 @@ server <- function(input, output, session) {
       valueBox(sum(get_selected()[3]), "Punkte gesamt", color = "green", icon = icon("chart-pie"))
     )
   })
-
-  output$pdfviewer <- renderUI(
-    tags$iframe(style="height:900px; width:100%", src="Git.pdf")
-  )
 }
