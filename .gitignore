@@ -56,4 +56,5 @@ po/*~
 
 www/
 R/temp/
-pdf/
+output/
+todo.txt
