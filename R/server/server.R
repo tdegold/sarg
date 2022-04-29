@@ -133,6 +133,9 @@ server <- function(input, output, session) {
     grAtexm <- paste0(grAdir, "/texm")
     grBtexm <- paste0(grBdir, "/texm")
 
+    if(!dir.exists(OUTPUT_PATH)){
+      dir.create(OUTPUT_PATH)
+    }
     dir.create(main_dir)
     dir.create(pdfdir)
 
