@@ -23,9 +23,6 @@ server <- function(input, output, session) {
 
   observe({
     req(is.null(input$tab_examples_rows_selected))
-    output$ace_editor <- renderUI({
-      h1("Zuerst im ersten Tab ein Beispiel auswählen!")
-    })
 
     output$selected_view <- renderUI({
         h1("Kein Beispiel markiert!")
@@ -42,17 +39,6 @@ server <- function(input, output, session) {
     output$selected_view <- renderUI({
       exams2html(gen_path(), dir = TEMP_PATH)
       withMathJax(includeHTML(paste0(TEMP_PATH, "/plain81.html")))
-    })
-    # tab_beispieleditor
-    output$ace_editor <- renderUI({
-      tagList(
-      aceEditor("file_content",
-                value = readChar(gen_path(), file.info(gen_path())$size),
-                mode = "r",
-                showLineNumbers = TRUE
-      ),
-      actionButton("ace_save", label = "Update Example", class = "btn-success")
-      )
     })
 
     observeEvent(input$ace_save, {
@@ -169,8 +155,4 @@ server <- function(input, output, session) {
       valueBox(sum(get_selected()[3]), "Punkte gesamt", color = "green", icon = icon("chart-pie"))
     )
   })
-
-  output$pdfviewer <- renderUI(
-    tags$iframe(style="height:900px; width:100%", src="Git.pdf")
-  )
 }
