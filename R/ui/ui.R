@@ -1,7 +1,5 @@
 source("ui/tab_beispieluebersicht.R")
-source("ui/tab_beispieleditor.R")
 source("ui/tab_beispielselector_sa.R")
-source("ui/tab_preview.R")
 
 ui  <- dashboardPage(
   # HEADER #
@@ -10,19 +8,15 @@ ui  <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Beispieluebersicht", tabName = "tab_beispieluebersicht", icon = icon("table")),
-      #menuItem("Beispieleditor", tabName = "tab_beispieleditor", icon = icon("file"), badgeLabel = "WiP!", badgeColor = "red"),
       menuItem("Beispielselektor", tabName = "tab_beispielselector", icon = icon("list"), startExpanded = TRUE,
                menuSubItem("Schularbeit", tabName = "tab_beispielselector_sa"))
-      #menuItem("Preview", tabName = "tab_preview", icon = icon("book"), badgeLabel = "WiP!", badgeColor = "red")
     )
   ),
   # BODY #
   dashboardBody(
     tabItems(
       tab_beispieluebersicht,
-      #tab_beispieleditor,
       tab_beispielselector_sa
-      #tab_preview
     )
   )
 )
