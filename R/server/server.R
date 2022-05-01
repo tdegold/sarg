@@ -1,6 +1,6 @@
 server <- function(input, output, session) {
   ### GENERATE LIST OF EXAMPLES FOR tab_beispieluebersicht
-  get_examples <- function(){
+  get_examples <- reactive({
     df_examples <- data.frame()
     for (ex in dir(EXAMPLES_PATH)) {
       meta <- exams::read_metainfo(paste0(EXAMPLES_PATH,ex))
@@ -14,37 +14,30 @@ server <- function(input, output, session) {
     }
     names(df_examples) <- c("Name", "Section", "Sum of Points", "Type", "File")
     # Return them sorted alphabetically by column Name
-    return(df_examples[order(df_examples$Name),])
-  }
+    df_examples[order(df_examples$Name),]
+  })
 
   output$tab_examples <- DT::renderDataTable({
-    # do not display the file-path using [,1:4]
+    # file path exculed ([,1:4])
     DT::datatable(get_examples()[,1:4], selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
   })
 
   observe({
     req(is.null(input$tab_examples_rows_selected))
-
     output$selected_view <- renderUI({
         h1("Kein Beispiel markiert!")
     })
   })
 
+  example_to_preview <- reactive({
+    paste0(get_examples()[input$tab_examples_rows_selected,5], ".Rmd")
+  })
+
   observe({
     req(input$tab_examples_rows_selected)
-    # tab_beispieluebersciht
-    gen_path <- function(){
-      return(paste0(get_examples()[input$tab_examples_rows_selected,5], ".Rmd"))
-    }
-
     output$selected_view <- renderUI({
-      exams2html(gen_path(), dir = TEMP_PATH)
+      exams2html(example_to_preview(), dir = TEMP_PATH)
       withMathJax(includeHTML(paste0(TEMP_PATH, "/plain81.html")))
-    })
-
-    observeEvent(input$ace_save, {
-      #TODO write file_content to respective file
-      showNotification("Example saved", type = "message")
     })
   })
 
@@ -52,13 +45,13 @@ server <- function(input, output, session) {
     selectInput("examplesChosen", "Beispiele", get_examples()[,1], multiple = TRUE)
   })
 
-  get_selected <- function(){
+  examples_selected <- reactive({
     f <- which(get_examples()$Name %in% input$examplesChosen)
-    return(get_examples()[f,])
-  }
+    get_examples()[f,]
+  })
 
   output$examplesChosenTable <- DT::renderDataTable({
-    DT::datatable(get_selected()[,1:4],
+    DT::datatable(examples_selected()[,1:4],
                   selection = "none",
                   options = list(
                     columnDefs = list(list(visible=FALSE, targets=0)),
@@ -102,13 +95,12 @@ server <- function(input, output, session) {
 
   reorder <- function(x){
     if(input$orderText == ""){ return(x)}
-
     new <- as.integer(str_split(input$orderText, ",")[[1]])
     return(x[new])
   }
 
   observeEvent(input$generatePDF, {
-    files <- paste0(get_selected()[,5],".Rmd")
+    files <- paste0(examples_selected()[,5],".Rmd")
     files <- reorder(files)
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
@@ -152,7 +144,7 @@ server <- function(input, output, session) {
       texdirm =c(grAtexm, grBtexm)
     )
 
-    f <- str_which(get_selected()$Section, "maxima")
+    f <- str_which(examples_selected()$Section, "maxima")
     if(input$examSplitMaxima){
       filesMaxima <- files[f]
       filesNormal <- files[-f]
@@ -203,7 +195,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$generateMOODLE, {
-    files <- paste0(get_selected()[,5],".Rmd")
+    files <- paste0(examples_selected()[,5],".Rmd")
     exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = FALSE)
     showNotification("Moodle-Quiz erstellt", type = "message")
   })
@@ -211,7 +203,7 @@ server <- function(input, output, session) {
   output$infoSection <- renderUI({
     column(width = 6,
       valueBox(length(input$examplesChosen), "Beispiele", color = "aqua", icon = icon("list-ol")),
-      valueBox(sum(get_selected()[3]), "Punkte gesamt", color = "green", icon = icon("chart-pie"))
+      valueBox(sum(examples_selected()[3]), "Punkte gesamt", color = "green", icon = icon("chart-pie"))
     )
   })
 }
