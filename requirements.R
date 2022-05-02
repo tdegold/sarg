@@ -5,7 +5,6 @@ req <- c(
   "rim",
   "rmarkdown",
   "shiny",
-  "shinyAce",
   "shinydashboard",
   "stringr",
   "xtable"
