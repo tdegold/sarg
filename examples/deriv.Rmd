@@ -14,12 +14,6 @@ Question
 ========
 What is the derivative of $f(x) = x^{`r a`} e^{`r b` x}$, evaluated at $x = `r c`$?
 
-```{r contourplot, echo = FALSE, fig.height = 5, fig.width = 5, fig.path = "", fig.cap = ""}
-plot(y~x, type = "l", col="red", lwd=3, xlim=c(0,3.14))
-par(new=T)
-plot(x~y, type = "l", col="green", lwd=3, xlim=c(0,3.14), axes=FALSE)
-```
-
 Solution
 ========
 Using the product rule for $f(x) = g(x) \cdot h(x)$, where $g(x) := x^{`r a`}$ and $h(x) := e^{`r b` x}$, we obtain
