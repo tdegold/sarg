@@ -33,9 +33,9 @@ utils.gen_pointscale_path <- function(x){
   for(i in x){
     d1 <- cbind(d1, as.character(j))
     j <- j+1
-    meta <- exams::read_metainfo(paste0(EXAMPLES_PATH,"/",i))
-    asum = asum + sum(meta$points)
-    d2 <- cbind(d2, as.character(sum(meta$points)))
+    metap <- exams::read_metainfo(paste0(EXAMPLES_PATH,"/",i))$points
+    asum = asum + sum(metap)
+    d2 <- cbind(d2, as.character(sum(metap)))
     d3 <- cbind(d3, "")
     format <- paste0(format, "|c")
   }

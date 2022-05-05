@@ -37,10 +37,6 @@ expenses (in EUR) of a tourist.
 
 a) What is the lower bound?
 
-\vspace*{7cm}
-
-\newpage
-
 Solution
 ========
 The $95\%$ confidence interval for the average expenses $\mu$ is
