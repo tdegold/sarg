@@ -7,7 +7,9 @@ library(shinydashboard)
 library(stringr)
 library(xtable)
 
-source("./config.R")
+source("config.R")
+
+source("utils.R")
 
 source("ui/ui.R")
 

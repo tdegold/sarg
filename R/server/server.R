@@ -1,25 +1,9 @@
 server <- function(input, output, session) {
-  ### GENERATE LIST OF EXAMPLES FOR tab_beispieluebersicht
-  get_examples <- reactive({
-    df_examples <- data.frame()
-    for (ex in dir(EXAMPLES_PATH)) {
-      meta <- exams::read_metainfo(paste0(EXAMPLES_PATH,ex))
-      df_examples <- rbind(df_examples,
-                           data.frame(meta$name,
-                                      paste(meta$section, collapse = ", "),
-                                      sum(meta$points),
-                                      meta$type,
-                                      meta$file)
-      )
-    }
-    names(df_examples) <- c("Name", "Section", "Sum of Points", "Type", "File")
-    # Return them sorted alphabetically by column Name
-    df_examples[order(df_examples$Name),]
-  })
+  all_examples <- reactive({utils.get_all_examples()})
 
   output$tab_examples <- DT::renderDataTable({
     # file path exculed ([,1:4])
-    DT::datatable(get_examples()[,1:4], selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
+    DT::datatable(all_examples()[,1:4], selection = "single", options=list(columnDefs = list(list(visible=FALSE, targets=0))))
   })
 
   observe({
@@ -30,7 +14,7 @@ server <- function(input, output, session) {
   })
 
   example_to_preview <- reactive({
-    paste0(get_examples()[input$tab_examples_rows_selected,5], ".Rmd")
+    paste0(all_examples()[input$tab_examples_rows_selected,5], ".Rmd")
   })
 
   observe({
@@ -42,12 +26,11 @@ server <- function(input, output, session) {
   })
 
   output$exampleSelector <- renderUI({
-    selectInput("examplesChosen", "Beispiele", get_examples()[,1], multiple = TRUE)
+    selectInput("examplesChosen", "Beispiele", all_examples()[,1], multiple = TRUE)
   })
 
   examples_selected <- reactive({
-    f <- which(get_examples()$Name %in% input$examplesChosen)
-    get_examples()[f,]
+    all_examples()[which(all_examples()$Name %in% input$examplesChosen),]
   })
 
   output$examplesChosenTable <- DT::renderDataTable({
@@ -58,79 +41,26 @@ server <- function(input, output, session) {
                     ordering = FALSE))
   })
 
-  punkteTable <- function(x){
-    d1 <- c("Punkte für Beispiel")
-    j <- 1
-    d2 <- data.frame("maximal erreichbar:")
-    asum <- 0
-    d3 <- data.frame("erreicht:")
-    format <- "|c|l"
-    for(i in x){
-      d1 <- cbind(d1, as.character(j))
-      j <- j+1
-      meta <- exams::read_metainfo(paste0(EXAMPLES_PATH,"/",i))
-      asum = asum + sum(meta$points)
-      d2 <- cbind(d2, as.character(sum(meta$points)))
-      d3 <- cbind(d3, "")
-      format <- paste0(format, "|c")
-    }
-    d1 <- cbind(d1, "Summe")
-    d2 <- cbind(d2, as.character(asum))
-    d3 <- cbind(d3, "")
-    names(d2) <- 1:length(d2)
-    names(d3) <- 1:length(d3)
-    d <- rbind(d2, d3)
-    names(d) <- d1
-    table <- xtable(d)
-    format <- paste0(format, "|c|")
-    align(table) <- format
-    temf <- tempfile()
-    print(table, include.rownames = FALSE, hline.after = c(-1:dim(d)[1]), floating = FALSE, file = temf)
-    if(Sys.info()[1] == "Windows"){
-      return(str_replace_all(temf, "\\\\", "/"))
-    }else{
-      return(temf)
-    }
-  }
-
-  reorder <- function(x){
-    if(input$orderText == ""){ return(x)}
-    new <- as.integer(str_split(input$orderText, ",")[[1]])
-    return(x[new])
-  }
-
   observeEvent(input$generatePDF, {
     files <- paste0(examples_selected()[,5],".Rmd")
-    files <- reorder(files)
+    files <- utils.reorder(files, userinput = input$orderText)
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
-    tableX <- as.character(punkteTable(files))
+    tableX <- as.character(utils.gen_pointscale_path(files))
 
-    guid <- tempfile(pattern="", tmpdir = "")
-
-    if(Sys.info()[1] == "Windows"){
-      guid <- str_replace_all(guid, "\\\\", "")
-    }else{
-      guid <- str_replace_all(guid, "/", "")
-    }
+    guid <- utils.path_replace(path = tempfile(pattern="", tmpdir = ""))
 
     main_dir <- paste0(OUTPUT_PATH, input$examClass, "_", input$examName, "_", dateX, "_", guid)
     pdfdir <- paste0(main_dir, "/pdf")
     grAdir <- paste0(main_dir, "/grA")
     grBdir <- paste0(main_dir, "/grB")
-
     grAtex <- paste0(grAdir, "/tex")
     grBtex <- paste0(grBdir, "/tex")
-
     grAtexm <- paste0(grAdir, "/texm")
     grBtexm <- paste0(grBdir, "/texm")
 
-    if(!dir.exists(OUTPUT_PATH)){
-      dir.create(OUTPUT_PATH)
-    }
     dir.create(main_dir)
     dir.create(pdfdir)
-
     dir.create(grAdir)
     dir.create(grBdir)
     dir.create(grAtex)
@@ -191,12 +121,17 @@ server <- function(input, output, session) {
                   ))
       }
     }
+
     showNotification("Schularbeit(en) erstellt", type = "message")
   })
 
   observeEvent(input$generateMOODLE, {
-    files <- paste0(examples_selected()[,5],".Rmd")
-    exams2moodle(files, dir = NOPS_PATH, name = input$examName, zip = FALSE)
+    exams2moodle(
+      file = paste0(examples_selected()[,5],".Rmd"),
+      dir = NOPS_PATH,
+      name = input$examName,
+      zip = FALSE)
+
     showNotification("Moodle-Quiz erstellt", type = "message")
   })
 
