@@ -42,8 +42,15 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$generatePDF, {
-    files <- paste0(examples_selected()[,5],".Rmd")
-    files <- utils.reorder(files, userinput = input$orderText)
+    files_selected <- examples_selected()
+    files_selected[,5] <- paste0(files_selected[,5], ".Rmd")
+    files_selected <- utils.reorder(files_selected, userinput = input$orderText)
+
+    f <- str_which(files_selected$Section, "maxima")
+    files <- files_selected[,5]
+    files_n <- files_selected[-f,5]
+    files_m <- files_selected[f,5]
+
     dateX <- as.character(input$examDate)
     nameX <- paste0(input$examName, "_", dateX, c("_au", "_lo"))
     tableX <- as.character(utils.gen_pointscale_path(files))
@@ -74,14 +81,11 @@ server <- function(input, output, session) {
       texdirm =c(grAtexm, grBtexm)
     )
 
-    f <- str_which(examples_selected()$Section, "maxima")
     if(input$examSplitMaxima){
-      filesMaxima <- files[f]
-      filesNormal <- files[-f]
       nameMaxima <- paste0(input$examName, "_", dateX, c("_maxima_au", "_maxima_lo"))
 
       for (i in 1:2) {
-        exams2pdf(filesNormal, n=1, dir = pdfdir, texdir = lookup$texdir[i],
+        exams2pdf(files_n, n=1, dir = pdfdir, texdir = lookup$texdir[i],
                   name = paste0(nameX, "_", lookup$gruppe[i]),
                   template = paste0(TEMPLATES_PATH,c("/tgm_exam", "/tgm_solution")),
                   header = list(
@@ -92,7 +96,7 @@ server <- function(input, output, session) {
                     Class = input$examClass,
                     TableDir = tableX
                   ), )
-        exams2pdf(filesMaxima, n=1, dir = pdfdir, texdir = lookup$texdirm[i],
+        exams2pdf(files_m, n=1, dir = pdfdir, texdir = lookup$texdirm[i],
                   name = paste0(nameMaxima, "_", lookup$gruppe[i]),
                   template = paste0(TEMPLATES_PATH,c("/tgm_maxima", "/tgm_solution")),
                   header = list(
@@ -102,7 +106,7 @@ server <- function(input, output, session) {
                     Komp = input$examKomp,
                     Class = input$examClass,
                     TableDir = tableX,
-                    EnumStartAt = length(filesNormal)
+                    EnumStartAt = length(files_n)
                   ))
       }
     }else{

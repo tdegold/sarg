@@ -56,7 +56,7 @@ After that we can use the information that after `r at` minutes has `r ta`° to 
 Meta-information
 ================
 extype: string
-exsolution: `r substr(res$wtl$linear, 7, 10000)`
+exsolution: 1
 exname: Maxima Differential equation
 extol: 0.01
 expoints: 1

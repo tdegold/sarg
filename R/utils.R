@@ -12,7 +12,7 @@ utils.get_all_examples <- function(){
   }
   names(df_examples) <- c("Name", "Section", "Sum of Points", "Type", "File")
   # Return them sorted alphabetically by column Name
-  return(df_examples[order(df_examples$Name),])
+  return(df_examples)
 }
 
 utils.path_replace <- function(path, replacewith = ""){
@@ -57,5 +57,5 @@ utils.gen_pointscale_path <- function(x){
 utils.reorder <- function(x, userinput = ""){
   if(userinput == ""){ return(x)}
   new <- as.integer(str_split(userinput, ",")[[1]])
-  return(x[new])
+  return(x[new,])
 }
