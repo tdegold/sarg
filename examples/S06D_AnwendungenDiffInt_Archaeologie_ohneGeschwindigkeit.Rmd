@@ -1,0 +1,106 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r data generation, echo = FALSE, results = "hide"}
+options(digits=2)
+library(RColorBrewer)
+library(ggplot2)
+library(gridExtra)
+library(latex2exp)
+colour<-brewer.pal(name="Pastel2",n=8)
+library(xtable)
+options(xtable.comment = FALSE)
+#library(rim)
+#library(reticulate)  ## better Python in R
+#maxima.options(engine.format = "latex", 
+           # engine.label = FALSE,
+           # inline.format = "latex", 
+           # inline.label = FALSE)
+library(exams)
+
+#maxima.stop()
+
+laenge<-700
+# ## parameters
+# switch1<-FALSE;switch2<-FALSE;switch3<-FALSE;switch4<-FALSE
+# example<-sample(1:4,1)
+# switch(example,
+#        switch1<-TRUE,
+#        switch2<-TRUE,
+#        switch3<-TRUE,
+#        switch4<-TRUE)
+# 
+# #print(c(switch1,switch2,switch3,switch4))
+# versionctrl1<-F
+# versionctrl2<-T
+#maxima.get("f:a*x^4+b*x^3+c*x^2+d*x+e;")
+#maxima.get("glg1:")
+
+
+sol<-"siehe Antwort"
+```
+
+Meta-information
+================
+extype: string
+exsolution: `r (sol)`
+exname: Maxima Anwendungen der Differenzial und Integralrechnung Archaeologie ohne Geschwindigkeit
+extol: 0.01
+expoints: 11
+exsection: default|maxima|S06D|AnwendungenDiffInt|InverseKurvendiskussion|Bogenlaenge
+
+Question
+========
+
+\textbf{Archaeologie:}
+
+Das Pesse Kanu ist der älteste archaeologische Fund eines Bootes der Menschheit datiert auf etwa 8000 Jahre BC. Damit handelt es sich um einen ausgehöhlten Baumstamm mit 298 cm Länge und 44 cm Breite. 
+
+a) Da dänische Historiker die Seetüchtigkeit des Kanus anzweifelten, fertigten Archäologen ein Replikat an, um dieses auf dem Wasser zu testen. Die gefahrene Teststrecke in einem See mit geradlinig verlaufendem Ufer ist folgendermaßen aufgebaut: 
+
+ Der Startpunkt der Kanus liegt in 5 Metern vertikaler Entfernung vom Ufer. Danach sollen 3 Bojen umfahren werden, ehe der Zielpunkt in 8,2 Meter vertikaler Entfernung vom Ufer und `r laenge` Meter horizontaler Entfernung von der Gerade des Startpunkts liegt. Die erste Boje ist in 150 Meter horizontaler Entfernung von der Gerade des Startpunkts und 8,2 Meter vertikaler Entfernung vom Ufer platziert. Die zweite Boje ist in 330 Meter horizontaler Entfernung von der Gerade des Startpunkts und 9 Meter vertikaler Entfernung vom Ufer platziert. Die dritte Boje ist in 580 Meter horizontaler Entfernung von der Gerade des Startpunkts und 7 Meter vertikaler Entfernung vom Ufer platziert. 
+
+```{r echo=FALSE,fig.width=4,fig.height=4, fig.cap=""}
+x<-seq(0,laenge,by=0.5)
+kanufunction<-function(x){return(-(3*x^4)/5579000000+(53*x^3)/69737500-(9837*x^2)/27895000+(8613*x)/139475+5)}
+y<-kanufunction(x)  
+plot(x,y,type="l",xlim=c(0,700),ylim=c(5,10),las=1,xlab="horizontale Entfernung von der Gerade des Startpunkts (in m)",ylab="vertikale Entfernung vom Ufer (in m)",col="white")
+abline(v=0);abline(h=0); grid(nx=NULL,ny=NULL)
+bojenx<-c(0,150,330,580,laenge)
+bojeny<-c(5,8.2,8.2,9,7)
+points(bojenx,bojeny)
+
+```
+
+
+Der Kanufahrer durchfährt diese Anordnung entlang des Verlaufs einer Polynomfunktion 4. Ordnung $f(x) = a \cdot x^4+b \cdot x^3 + c \cdot x^2 +d \cdot x + e$ , wobei x und f(x) in Metern angegeben sind. Dabei hält er aus Sicherheitsgründen jeweils mindestens 30 Zentimeter vertikalen Abstand zur Boje an denjenigen Stellen, wo er die Richtung ändert. 
+
+- Stelle das passende Gleichungssystem für die Ermittlung dieser Funktion f(x) auf. 
+
+- Ermittle die Gleichung der Funktion f(x). 
+
+- Interpretiere die Bedeutung des Wertes von e im Sachkontext unter Verwendung der passenden Einheit. 
+
+b) Bei der Fahrt in die Gegenrichtung vom Zielpunkt zum Startpunkt fährt der Kanufahrer entlang des Verlaufs der Funktion 
+$f(x) = -\frac{3 {{x}^{4}}}{5579000000}+\frac{53 {{x}^{3}}}{69737500}-\frac{9837 {{x}^{2}}}{27895000}+\frac{8613 x}{139475}+5$ , wobei x und f(x) in Metern angegeben sind.
+
+- Zeichne die Fahrstrecke in das angegebene Koordinatensystem ein. 
+
+- Ermittle die Länge der gesamten Fahrstrecke der Rückfahrt in Kilometern. 
+
+- Ermittle den höchsten Abstand, den das Kanu vom mittleren Uferabstand während der Fahrstrecke erreicht. 
+
+Ein Archäologe behauptet: "Die gesamte Wasserfläche zwischen der Fahrstrecke und dem Ufer ist hundert-mal so groß wie die Fläche des Kanus in der Aufsicht." 
+
+- Überprüfe nachweislich, ob diese Aussage korrekt ist. 
+
+Solution
+========
+
+a) 
+
+- Stelle das passende Gleichungssystem für die Ermittlung dieser Funktion f(x) auf. 
+
+`r laenge`

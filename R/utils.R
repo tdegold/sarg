@@ -19,7 +19,7 @@ utils.path_replace <- function(path, replacewith = ""){
   if(Sys.info()[1] == "Windows"){
     return(str_replace_all(path, "\\\\", replacewith))
   }else{
-    return(str_replace_all(guid, "/", replacewith))
+    return(str_replace_all(path, "/", replacewith))
   }
 }
 

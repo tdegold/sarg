@@ -1,7 +1,6 @@
 req <- c(
   "DT",
   "exams",
-  "pipeR",
   "rim",
   "rmarkdown",
   "shiny",

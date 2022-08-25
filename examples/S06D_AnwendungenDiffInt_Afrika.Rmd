@@ -1,0 +1,77 @@
+```{r data generation, echo = FALSE, results = "hide"}
+options(digits=2)
+library(RColorBrewer)
+library(ggplot2)
+library(gridExtra)
+library(latex2exp)
+colour<-brewer.pal(name="Pastel2",n=8)
+library(xtable)
+options(xtable.comment = FALSE)
+# library(rim)
+# library(reticulate)  ## better Python in R
+# maxima.options(engine.format = "latex", 
+#            engine.label = FALSE,
+#            inline.format = "latex", 
+#            inline.label = FALSE)
+library(exams)
+
+
+sol<-"siehe Antwort"
+```
+
+Meta-information
+================
+extype: string
+exsolution: `r (sol)`
+exname: Maxima Anwendungen der Differenzial und Integralrechnung Afrika
+extol: 0.01
+expoints: 9
+exsection: default|maxima|S06D|AnwendungenDiffInt|InverseKurvendiskussion|Volumsintegral
+
+Question
+========
+
+Die Steppen Afrikas sind die Heimat unterschiedlicher Wildtiere. 
+
+a) Löwen sind Sprintjäger, die sich an Beutetiere anpirschen und sie schnell reißen. Die Geschwindigkeit einer Löwin bei der Jagd wird im folgenden Geschwindigkeit-Zeit-Diagramm ausschnittsweise dargestellt. 
+
+```{r fig.width=5,fig.height=5,echo=FALSE, fig.cap=""}
+geschwfkt<-function(x){(3*x^3)/11750-(37*x^2)/2350+(56*x)/235}
+x<-seq(0,15,by=0.1)
+v<-geschwfkt(x)
+plot(x,v,type="l",las=1,xlab="Zeit (in s)",ylab="Geschwindigkeit (in m/s)",xlim=c(0,15))
+abline(v=0);abline(h=0); grid()
+```
+
+- Interpretiere die Bedeutung des Ausdrucks $\frac{5-3}{13-3}$ im gegebenen Sachkontext unter Verwendung der korrekten Einheit. 
+
+- Ermittle graphisch die momentane Beschleunigung der Löwin nach einer Achtel Minute. 
+
+- Zeichne den Weg ein, den die Löwin während der Jagd zurücklegt. 
+
+- Schätze den Weg ab, die Löwin während der Jagd zurücklegt. 
+
+b) Eine alte Methode zum Fangen von Affen beinhaltet folgendes Vorgehen: 
+Ein Leckerbissen wird für den Affen in einem Tonkrug platziert, dessen Öffnung groß genug für die leere Hand des Affen ist, aber kleiner als seine geschlossene Faust. 
+
+Die folgende Grafik zeigt den Querschnitt des Innenraums eines Tonkrugs. 
+
+```{r fig.width=6,fig.height=3,echo=FALSE, fig.cap=""}
+krugfkt<-function(x){-(617*x^4)/560560+(2391*x^3)/43120-(62289*x^2)/70070+(89181*x)/20020+6}
+x<-seq(0,20,by=0.01)
+ykrug<-krugfkt(x)
+plot(x,ykrug,type="l",las=1,xlab="Höhe des Krugs (in cm)",ylab = "Breite des Krugs (in cm)",xlim=c(0,20),ylim=c(-13,13))
+lines(x,-ykrug,)
+abline(v=0);abline(h=0);grid()
+```
+
+- Ermittle das gesamte Füllvolumen des Tonkrugs in Litern. 
+
+- Zeige nachweislich, dass die geballte Faust eines Affen mit 9 Zentimetern Breite nicht mehr durch die Öffnung passt und das Tier dadurch gefangen werden kann.  
+
+Solution
+========
+
+Die Steppen Afrikas sind die Heimat unterschiedlicher Wildtiere.
+
+
