@@ -38,7 +38,8 @@ server <- function(input, output, session) {
                   selection = "none",
                   options = list(
                     columnDefs = list(list(visible=FALSE, targets=0)),
-                    ordering = FALSE))
+                    ordering = FALSE,
+                    pageLength = 100))
   })
 
   observeEvent(input$generatePDF, {

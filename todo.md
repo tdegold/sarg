@@ -1,4 +1,4 @@
--   [ ] 1. maxima examples not in correct order?!
+-   [x] 1. maxima examples not in correct order?! (doch, wenn man die Maxima-Bsp nach den normalen Bsp angibt)
 -   [ ] 6. Gruppen unabhängig voneinander editieren (Gruppe als Eingabefeld)
 -   [ ] 5. Try catch bei Auflistung von Beispielen NTH
 -   [ ] 4. Reiter Nachprüfung
