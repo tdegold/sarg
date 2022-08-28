@@ -5,6 +5,7 @@ RUN apt update && \
     gnuplot \
     make \
     sbcl \
+    texinfo \
     wget
 
 COPY installmaxima.sh /opt
@@ -13,7 +14,7 @@ WORKDIR /opt
 
 RUN sh ./installmaxima.sh
 
-FROM rocker/r-ubuntu:22.04
+FROM rocker/r-ubuntu:22.04 AS shiny-app
 
 RUN apt-get update && \
     apt-get install -y gnuplot pandoc texlive-latex-recommended texlive-pictures texlive-latex-extra
@@ -28,11 +29,11 @@ RUN install2.r --error \
     stringr \
     xtable
 
-COPY --from=maxima-installer    /usr/local/lib/maxima /usr/local/lib/maxima 
-COPY --from=maxima-installer    /usr/local/share/maxima /usr/local/share/maxima 
-COPY --from=maxima-installer    /usr/local/share/bash-completion/completions/maxima /usr/local/share/bash-completion/completions/maxima 
-COPY --from=maxima-installer    /usr/local/bin/maxima /usr/local/bin/maxima 
+COPY --from=maxima-installer    /usr/local/bin/maxima /usr/local/bin/maxima
+COPY --from=maxima-installer    /usr/local/lib/maxima /usr/local/lib/maxima
 COPY --from=maxima-installer    /usr/local/libexec/maxima /usr/local/libexec/maxima
+COPY --from=maxima-installer    /usr/local/share/maxima /usr/local/share/maxima
+COPY --from=maxima-installer    /usr/local/share/bash-completion/completions/maxima /usr/local/share/bash-completion/completions/maxima
 
 RUN mkdir -p /home/docker/src
 

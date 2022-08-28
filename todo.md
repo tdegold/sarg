@@ -3,7 +3,7 @@
 -   [ ] 5. Try catch bei Auflistung von Beispielen NTH
 -   [ ] 4. Reiter Nachprüfung
 -   [ ] 5. Mindestens zwei Beispiele?!
--   [ ] 6. only list Rmd in overview tab
+-   [x] 6. only list Rmd in overview tab
 -   [ ] 7. beispielpunktesumme?!
 
 Remark: Leerseiten und Reihenfolge der Beispiele funktionieren, sind aber keine "schönen" Lösungen und sollten zu späterer Stunde "wirklich" implementiert werden.

@@ -5,7 +5,7 @@ wget -O maxima-$MAXIMA_VER.tar.gz https://sourceforge.net/projects/maxima/files/
 tar -xvf maxima-$MAXIMA_VER.tar.gz
 cd maxima-$MAXIMA_VER/
 # run configure
-sh ./configure --disable-build-docs --enable-sbcl-exec
+sh ./configure --enable-sbcl-exec
 # compile and install
 make
 #make check

@@ -1,6 +1,6 @@
 utils.get_all_examples <- function(){
   df_examples <- data.frame()
-  for (ex in dir(EXAMPLES_PATH)) {
+  for (ex in dir(EXAMPLES_PATH, pattern = "*.Rmd")) {
     meta <- exams::read_metainfo(paste0(EXAMPLES_PATH,ex))
     df_examples <- rbind(df_examples,
                          data.frame(meta$name,
